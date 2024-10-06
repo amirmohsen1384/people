@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/reset.ico</file>
+        <file>images/default.png</file>
+        <file>icons/accept.ico</file>
+        <file>icons/browse.ico</file>
+        <file>icons/capture.ico</file>
+        <file>icons/reject.ico</file>
+        <file>icons/settings.ico</file>
+    </qresource>
+</RCC>

@@ -51,6 +51,52 @@
    <item>
     <layout class="QHBoxLayout" name="photoResetLayout">
      <item>
+      <widget class="QPushButton" name="fileBrowseButton">
+       <property name="toolTip">
+        <string>Browse File</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/resources.qrc">
+         <normaloff>:/icons/folder.ico</normaloff>:/icons/folder.ico</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cameraButton">
+       <property name="toolTip">
+        <string>Take Photo</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/resources.qrc">
+         <normaloff>:/icons/camera.ico</normaloff>:/icons/camera.ico</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="photoResetLeftSpacer">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>

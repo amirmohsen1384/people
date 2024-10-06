@@ -7,5 +7,7 @@
         <file>icons/capture.ico</file>
         <file>icons/reject.ico</file>
         <file>icons/settings.ico</file>
+        <file>icons/camera.ico</file>
+        <file>icons/folder.ico</file>
     </qresource>
 </RCC>

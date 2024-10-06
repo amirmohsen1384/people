@@ -9,19 +9,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
     main.cpp \
-    application.cpp \
+    src/application.cpp \
     src/data/firstnamevalidator.cpp \
     src/data/lastnamevalidator.cpp \
     src/data/person.cpp
 
 HEADERS += \
-    application.h \
+    include/application.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \
     include/data/person.h
 
 FORMS += \
-    application.ui
+    gui/application.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

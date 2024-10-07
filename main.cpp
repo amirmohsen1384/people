@@ -1,5 +1,5 @@
 #include "include/data/person.h"
-#include "application.h"
+#include "include/application.h"
 #include <QApplication>
 #include <QFile>
 

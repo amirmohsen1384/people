@@ -18,6 +18,10 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
+    connect(ui->fileBrowseButton, &QPushButton::clicked, this, [&]() {
+        LoadImage(FindImageFile());
+    });
+
     this->initial = new Person();
     this->SetPerson(this->initial);
 }
@@ -93,14 +97,16 @@ void PersonEdit::ResetGender() {
 
 // These functions are used to retrieve and change the photo
 QPixmap PersonEdit::GetPhoto() const {
-    return ui->photoPreview->pixmap();
+    const QPixmap &photo = ui->photoPreview->pixmap();
+    return (photo.toImage() != this->GetDefaultPhoto().toImage()) ? photo : QPixmap();
 }
 void PersonEdit::SetPhoto(const QPixmap &value) {
     if(!value.isNull()) {
         ui->photoPreview->setPixmap(value);
         emit PhotoChanged(value);
     } else {
-        ui->photoPreview->setPixmap(QPixmap(":/images/default.png"));
+        ui->photoPreview->setPixmap(this->GetDefaultPhoto());
+        emit PhotoChanged(QPixmap());
     }
 }
 void PersonEdit::ResetPhoto() {

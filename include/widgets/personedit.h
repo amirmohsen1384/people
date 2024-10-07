@@ -11,6 +11,11 @@ class PersonEdit : public QWidget
     Q_OBJECT
     QPointer<Person> initial = nullptr;
     Ui::PersonEdit *ui = nullptr;
+private:
+    QImage FindImageFile();
+    QPixmap GetDefaultPhoto() const;
+    void LoadImage(const QImage &image);
+
 public:
     explicit PersonEdit(QWidget *parent = nullptr);
     explicit PersonEdit(QPointer<Person> initial, QWidget *parent = nullptr);

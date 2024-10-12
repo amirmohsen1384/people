@@ -22,8 +22,18 @@ private:
     void Initialize();
 
 public:
-    explicit Photographer(QWidget *parent = nullptr);
     ~Photographer();
+    explicit Photographer(QWidget *parent = nullptr);
+    explicit Photographer(const QCameraDevice &device, QWidget *parent = nullptr);
+
+    auto GetCurrentDevice() const;
+
+public slots:
+    void SetCurrentDevice(const QCameraDevice &device);
+
+signals:
+    void CurrentDeviceChanged(const QCameraDevice &camera);
+
 };
 
 #endif // PHOTOGRAPHER_H

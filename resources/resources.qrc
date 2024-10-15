@@ -9,5 +9,7 @@
         <file>icons/settings.ico</file>
         <file>icons/camera.ico</file>
         <file>icons/folder.ico</file>
+        <file>icons/gender/man.ico</file>
+        <file>icons/gender/woman.ico</file>
     </qresource>
 </RCC>

@@ -101,7 +101,10 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Icon</string>
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../../resources/resources.qrc">:/icons/gender/man.ico</pixmap>
        </property>
       </widget>
      </item>
@@ -174,6 +177,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../resources/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

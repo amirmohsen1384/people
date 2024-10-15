@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 SOURCES += \
     main.cpp \
     src/application.cpp \
+    src/widgets/personview.cpp \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
     src/data/lastnamevalidator.cpp \
@@ -20,11 +21,13 @@ HEADERS += \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \
-    include/data/person.h
+    include/data/person.h \
+    include/widgets/personview.h
 
 FORMS += \
     gui/application.ui \
-    gui/widgets/personedit.ui
+    gui/widgets/personedit.ui \
+    gui/widgets/personview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

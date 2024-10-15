@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>704</width>
-    <height>683</height>
+    <height>702</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,31 +38,14 @@
     </widget>
    </item>
    <item>
+    <widget class="Line" name="outerSeparator">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QGridLayout" name="infoLayout">
-     <item row="3" column="0" colspan="3">
-      <widget class="QLabel" name="creationLabel">
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Creation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0" colspan="3">
-      <widget class="QLabel" name="lastModificationLabel">
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Last Modification</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="genderLabel">
        <property name="font">
@@ -75,15 +58,24 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QLabel" name="birthdayLabel">
-       <property name="font">
-        <font>
-         <bold>true</bold>
-        </font>
+     <item row="4" column="0" colspan="3">
+      <widget class="Line" name="secondInnerSeparator">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="3">
+      <widget class="Line" name="firstInnerSeparator">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0" colspan="3">
+      <widget class="QLabel" name="lastModifiedDate">
        <property name="text">
-        <string>Birthday</string>
+        <string>Date</string>
        </property>
       </widget>
      </item>
@@ -114,23 +106,59 @@
       </widget>
      </item>
      <item row="2" column="0" colspan="3">
-      <widget class="QLabel" name="birthdayDate">
+      <widget class="QLabel" name="birthdayLabel">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Date</string>
+        <string>Birthday</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="3">
+     <item row="8" column="0" colspan="3">
+      <widget class="QLabel" name="lastModificationLabel">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Last Modification</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="3">
+      <widget class="QLabel" name="creationLabel">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Creation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="3">
       <widget class="QLabel" name="creationDate">
        <property name="text">
         <string>Date</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="0" colspan="3">
-      <widget class="QLabel" name="lastModifiedDate">
+     <item row="3" column="0" colspan="3">
+      <widget class="QLabel" name="birthdayDate">
        <property name="text">
         <string>Date</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="3">
+      <widget class="Line" name="thirdInnerSeparator">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
       </widget>
      </item>

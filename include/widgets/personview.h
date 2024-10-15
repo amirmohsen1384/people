@@ -29,6 +29,9 @@ public:
 
     Person& GetPerson();
     void SetPerson(Person &data);
+
+signals:
+    void PersonChanged(Person &data);
 };
 
 #endif // PERSONVIEW_H

@@ -6,16 +6,16 @@ void PersonView::UpdateName() {
 }
 
 void PersonView::UpdatePhoto() {
-    ui->photoView->setImage(information.GetPhoto());
+    ui->photoView->SetImage(information.GetPhoto().toImage());
 }
 
 void PersonView::UpdateGender() {
     if(information.GetGender() == Person::Gender::Male) {
         ui->genderText->setText("Male");
-        ui->genderIcon->setPixmap(":/icons/gender/man.ico");
+        ui->genderIcon->setPixmap(QPixmap(":/icons/gender/man.ico"));
     } else {
         ui->genderText->setText("Female");
-        ui->genderIcon->setPixmap(":/icons/gender/woman.ico");
+        ui->genderIcon->setPixmap(QPixmap(":/icons/gender/woman.ico"));
     }
 }
 
@@ -38,7 +38,7 @@ PersonView::PersonView(QWidget *parent) : QWidget(parent), ui(new Ui::PersonView
     connect(&information, &Person::LastNameChanged, this, &PersonView::UpdateName);
     connect(&information, &Person::FirstNameChanged, this, &PersonView::UpdateName);
     connect(&information, &Person::BirthdayChanged, this, &PersonView::UpdateBirthday);
-    connect(&information, &Person::CreationChanged, this, &PersonView::UpdateCreation);
+    connect(&information, &PersonView::PersonChanged, this, &PersonView::UpdateCreation);
     connect(&information, &Person::LastModificationChanged, this, &PersonView::UpdateLastModification);
 }
 
@@ -55,4 +55,5 @@ Person &PersonView::GetPerson() {
 
 void PersonView::SetPerson(Person &data) {
     information = data;
+    emit PersonChanged(information);
 }

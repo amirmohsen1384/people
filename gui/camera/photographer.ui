@@ -44,6 +44,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="captureButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -73,6 +76,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="optionsButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string/>
        </property>

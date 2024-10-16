@@ -18,6 +18,13 @@ void Photographer::MakeConnection() {
             camera.start();
         }
     });
+    connect(&capture, &QImageCapture::readyForCaptureChanged, this, &Photographer::UpdateController);
+    connect(&camera, &QCamera::cameraDeviceChanged, this, &Photographer::UpdateController);
+    connect(&camera, &QCamera::activeChanged, this, &Photographer::UpdateController);
+}
+void Photographer::UpdateController() {
+    ui->optionsButton->setEnabled(camera.isAvailable());
+    ui->captureButton->setEnabled(capture.isReadyForCapture());
 }
 Photographer::Photographer(QWidget *parent) : QDialog(parent), ui(new Ui::Photographer) {
     ui->setupUi(this);

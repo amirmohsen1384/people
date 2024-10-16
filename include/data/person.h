@@ -65,8 +65,8 @@ signals:
     void LastModificationChanged(const QDateTime &value);
 };
 
-typedef QList<Person> PersonList;
-typedef QListIterator<Person> PersonListIterator;
+using PersonList = QList<Person>;
+using PersonListIterator = QListIterator<Person>;
 
 Q_DECLARE_METATYPE(Person)
 

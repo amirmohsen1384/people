@@ -232,6 +232,16 @@
        <property name="text">
         <string>Female</string>
        </property>
+       <property name="icon">
+        <iconset resource="../../resources/resources.qrc">
+         <normaloff>:/icons/gender/woman.ico</normaloff>:/icons/gender/woman.ico</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -251,6 +261,16 @@
       <widget class="QRadioButton" name="maleRadioButton">
        <property name="text">
         <string>Male</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/resources.qrc">
+         <normaloff>:/icons/gender/man.ico</normaloff>:/icons/gender/man.ico</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>48</width>
+         <height>48</height>
+        </size>
        </property>
        <property name="checked">
         <bool>true</bool>

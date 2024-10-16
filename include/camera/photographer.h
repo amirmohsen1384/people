@@ -21,6 +21,7 @@ class Photographer : public QDialog
 private:
     void Initialize();
     void MakeConnection();
+    void UpdateController();
 public:
     ~Photographer();
     explicit Photographer(QWidget *parent = nullptr);

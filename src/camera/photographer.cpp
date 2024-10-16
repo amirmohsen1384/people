@@ -27,9 +27,17 @@ void Photographer::UpdateController() {
     ui->captureButton->setEnabled(capture.isReadyForCapture());
 }
 Photographer::Photographer(QWidget *parent) : QDialog(parent), ui(new Ui::Photographer) {
+    // Setup the user interface
     ui->setupUi(this);
+
+    // Connect required signals to slots
     MakeConnection();
+
+    // Initialize the camera device
     Initialize();
+    UpdateController();
+
+    // Start the camera
     if(camera.isAvailable()) {
         camera.start();
     }

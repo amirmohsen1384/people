@@ -20,20 +20,20 @@ class Photographer : public QDialog
 
 private:
     void Initialize();
-
+    void MakeConnection();
 public:
     ~Photographer();
     explicit Photographer(QWidget *parent = nullptr);
     explicit Photographer(const QCameraDevice &device, QWidget *parent = nullptr);
 
-    auto GetCurrentDevice() const;
+    QCameraDevice GetCurrentDevice() const;
 
 public slots:
     void SetCurrentDevice(const QCameraDevice &device);
 
 signals:
     void CurrentDeviceChanged(const QCameraDevice &camera);
-
+    void ImageCaptured(const QImage &image);
 };
 
 #endif // PHOTOGRAPHER_H

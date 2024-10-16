@@ -7,20 +7,27 @@ void Photographer::Initialize() {
     session.setVideoOutput(ui->cameraView);
 }
 void Photographer::MakeConnection() {
-    connect(ui->captureButton, &QPushButton::clicked, &capture, &QImageCapture::capture);
-    connect(&capture, &QImageCapture::imageCaptured, [this](int id, const QImage &preview) {
+    connect(&capture, &QImageCapture::imageCaptured, this, [&](int id, const QImage &preview) {
         Q_UNUSED(id)
         emit ImageCaptured(preview);
     });
-    connect(this, &Photographer::CurrentDeviceChanged, [this](const QCameraDevice &device) {
+    connect(this, &Photographer::CurrentDeviceChanged, this, [&](const QCameraDevice &device) {
         Q_UNUSED(device)
         if(camera.isAvailable()) {
             camera.start();
         }
     });
+    connect(this, &Photographer::AvaliableDevicesChanged, this, [&]() {
+        if(!devices.videoInputs().isEmpty()) {
+            SetCurrentDevice(devices.defaultVideoInput());
+        }
+    });
+    connect(&devices, &QMediaDevices::videoInputsChanged, this, &Photographer::AvaliableDevicesChanged);
     connect(&capture, &QImageCapture::readyForCaptureChanged, this, &Photographer::UpdateController);
     connect(&camera, &QCamera::cameraDeviceChanged, this, &Photographer::UpdateController);
+    connect(ui->captureButton, &QPushButton::clicked, &capture, &QImageCapture::capture);
     connect(&camera, &QCamera::activeChanged, this, &Photographer::UpdateController);
+
 }
 void Photographer::UpdateController() {
     ui->optionsButton->setEnabled(camera.isAvailable());

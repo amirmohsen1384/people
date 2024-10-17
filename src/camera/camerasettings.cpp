@@ -11,6 +11,7 @@ CameraSettings::CameraSettings(QCamera *value, QWidget *parent) : CameraSettings
 }
 
 void CameraSettings::MakeConnection() {
+    UpdateDevices();
     DeviceConnection();
 }
 
@@ -179,6 +180,7 @@ void CameraSettings::UpdateFlash() {
 #undef ADD_FLASH
 
     ui->flashGroup->setEnabled(true);
+    ui->flashRadyLabel->setEnabled(true);
     FlashConnection();
 }
 

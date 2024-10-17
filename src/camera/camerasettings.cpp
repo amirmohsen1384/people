@@ -7,10 +7,7 @@ CameraSettings::CameraSettings(QWidget *parent) : QWidget(parent), ui(new Ui::Ca
     MakeConnection();
 }
 CameraSettings::CameraSettings(QCamera *value, QWidget *parent) : CameraSettings(parent) {
-    SetCamera(camera);
-}
-QSize CameraSettings::sizeHint() const {
-    return QSize(850, 280);
+    SetCamera(value);
 }
 
 void CameraSettings::MakeConnection() {
@@ -24,6 +21,7 @@ void CameraSettings::DeviceConnection() {
         camera->setCameraDevice(qvariant_cast<QCameraDevice>(ui->deviceComboBox->currentData()));
     });
     connect(this, &CameraSettings::CameraChanged, this, [&](QCamera *device) {
+        Q_UNUSED(device)
         connect(camera, &QCamera::cameraDeviceChanged, this, &CameraSettings::UpdateOptions);
         this->UpdateOptions();
     });
@@ -32,12 +30,12 @@ void CameraSettings::WhiteBalanceConnection() {
     connect(ui->temperatureSlider, &QSlider::valueChanged, camera, &QCamera::setColorTemperature);
     connect(ui->whiteBalanceComboBox, &QComboBox::currentIndexChanged, this, [&](int index) {
         Q_UNUSED(index)
-        camera->setWhiteBalanceMode(qvariant<QCamera::WhiteBalanceMode>(ui->whiteBalanceComboBox->currentData()));
+        camera->setWhiteBalanceMode(qvariant_cast<QCamera::WhiteBalanceMode>(ui->whiteBalanceComboBox->currentData()));
     });
     connect(camera, &QCamera::whiteBalanceModeChanged, this, [&]() {
         if(camera->supportedFeatures().testFlag(QCamera::Feature::ColorTemperature)) {
-            ui->temperatureLabel->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceMode::Manual);
-            ui->temperatureSlider->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceMode::Manual);
+            ui->temperatureLabel->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceManual);
+            ui->temperatureSlider->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceManual);
         }
     });
 }
@@ -52,7 +50,7 @@ void CameraSettings::ExposureConnection() {
 void CameraSettings::FlashConnection() {
 #define CONNECT_FLASH(MODE) \
     connect(ui->flashAutoRadioButton, &QRadioButton::clicked, this, [&]() { \
-        if(ui->flash##Mode##RadioButton->isChecked()) { \
+        if(ui->flash##MODE##RadioButton->isChecked()) { \
             camera->setFlashMode(QCamera::FlashAuto); \
         } \
     });
@@ -70,7 +68,7 @@ void CameraSettings::FlashConnection() {
 void CameraSettings::UpdateWhiteBalance() {
     ui->whiteBalanceGroup->setEnabled(false);
     ui->whiteBalanceComboBox->clear();
-    if(camera.isNull()) {
+    if(camera == nullptr) {
         return;
     }
 
@@ -98,7 +96,7 @@ void CameraSettings::UpdateWhiteBalance() {
 void CameraSettings::UpdateExposure() {
     ui->exposureModeComboBox->clear();
     ui->exposureGroup->setEnabled(false);
-    if(camera.isNull()) {
+    if(camera == nullptr) {
         return;
     }
 
@@ -152,7 +150,7 @@ void CameraSettings::UpdateOptions() {
 
 void CameraSettings::UpdateFlash() {
     ui->flashGroup->setEnabled(false);
-    if(camera.isNull()) {
+    if(camera == nullptr) {
         return;
     }
 

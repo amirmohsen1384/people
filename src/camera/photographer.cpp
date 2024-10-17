@@ -7,7 +7,7 @@ void Photographer::Initialize() {
     session.setVideoOutput(ui->cameraView);
 
     settings.SetCamera(&camera);
-    settings.setFixedSize(settings.sizeHint());
+    settings.setFixedSize(settings.size());
 }
 void Photographer::MakeConnection() {
     connect(&capture, &QImageCapture::imageCaptured, this, [&](int id, const QImage &preview) {

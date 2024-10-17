@@ -1,6 +1,7 @@
 #ifndef CAMERASETTINGS_H
 #define CAMERASETTINGS_H
 
+#include <QCamera>
 #include <QWidget>
 #include <QMediaDevices>
 
@@ -12,11 +13,8 @@ class CameraSettings : public QWidget
 {
     Q_OBJECT
     QMediaDevices devices;
-    QPointer<QCamera> camera;
+    QCamera *camera = nullptr;
     Ui::CameraSettings *ui = nullptr;
-protected:
-    virtual QSize sizeHint() const;
-
 private:
     void MakeConnection();
     void DeviceConnection();
@@ -34,6 +32,8 @@ private slots:
 public:
     explicit CameraSettings(QCamera *value, QWidget *parent = nullptr);
     explicit CameraSettings(QWidget *parent = nullptr);
+    ~CameraSettings();
+
     QCamera* GetCamera();
 
 public slots:

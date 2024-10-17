@@ -34,8 +34,14 @@ void CameraSettings::WhiteBalanceConnection() {
     });
     connect(camera, &QCamera::whiteBalanceModeChanged, this, [&]() {
         if(camera->supportedFeatures().testFlag(QCamera::Feature::ColorTemperature)) {
-            ui->temperatureLabel->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceManual);
-            ui->temperatureSlider->setEnabled(camera->whiteBalanceMode() == QCamera::WhiteBalanceManual);
+            if(camera->whiteBalanceMode() == QCamera::WhiteBalanceManual) {
+                ui->temperatureLabel->setEnabled(true);
+                ui->temperatureSlider->setEnabled(true);
+                camera->setColorTemperature(ui->temperatureSlider->value());
+            } else {
+                ui->temperatureLabel->setEnabled(true);
+                ui->temperatureSlider->setEnabled(true);
+            }
         }
     });
 }

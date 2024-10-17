@@ -38,9 +38,11 @@ void CameraSettings::WhiteBalanceConnection() {
                 ui->temperatureLabel->setEnabled(true);
                 ui->temperatureSlider->setEnabled(true);
                 camera->setColorTemperature(ui->temperatureSlider->value());
+
             } else {
-                ui->temperatureLabel->setEnabled(true);
-                ui->temperatureSlider->setEnabled(true);
+                ui->temperatureLabel->setEnabled(false);
+                ui->temperatureSlider->setEnabled(false);
+
             }
         }
     });

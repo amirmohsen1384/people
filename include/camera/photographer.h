@@ -5,6 +5,7 @@
 #include <QCamera>
 #include <QMediaDevices>
 #include <QImageCapture>
+#include "camerasettings.h"
 #include <QMediaCaptureSession>
 
 namespace Ui {
@@ -17,6 +18,7 @@ class Photographer : public QDialog
     QCamera camera;
     QMediaDevices devices;
     QImageCapture capture;
+    CameraSettings settings;
     QMediaCaptureSession session;
     Ui::Photographer *ui = nullptr;
 

@@ -5,6 +5,9 @@ void Photographer::Initialize() {
     session.setCamera(&camera);
     session.setImageCapture(&capture);
     session.setVideoOutput(ui->cameraView);
+
+    settings.SetCamera(&camera);
+    settings.setFixedSize(settings.sizeHint());
 }
 void Photographer::MakeConnection() {
     connect(&capture, &QImageCapture::imageCaptured, this, [&](int id, const QImage &preview) {
@@ -15,6 +18,11 @@ void Photographer::MakeConnection() {
         Q_UNUSED(device)
         if(camera.isAvailable()) {
             camera.start();
+        }
+    });
+    connect(ui->optionsButton, &QPushButton::clicked, this, [&]() {
+        if(!settings.isVisible()) {
+            settings.setVisible(true);
         }
     });
     connect(this, &Photographer::AvaliableDevicesChanged, this, [&]() {

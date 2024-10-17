@@ -14,6 +14,8 @@ class CameraSettings : public QWidget
     QMediaDevices devices;
     QPointer<QCamera> camera;
     Ui::CameraSettings *ui = nullptr;
+protected:
+    virtual QSize sizeHint() const;
 
 private:
     void MakeConnection();

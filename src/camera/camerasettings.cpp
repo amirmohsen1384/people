@@ -9,6 +9,10 @@ CameraSettings::CameraSettings(QWidget *parent) : QWidget(parent), ui(new Ui::Ca
 CameraSettings::CameraSettings(QCamera *value, QWidget *parent) : CameraSettings(parent) {
     SetCamera(camera);
 }
+QSize CameraSettings::sizeHint() const {
+    return QSize(850, 280);
+}
+
 void CameraSettings::MakeConnection() {
     DeviceConnection();
 }

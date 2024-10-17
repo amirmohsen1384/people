@@ -89,7 +89,11 @@ void CameraSettings::UpdateWhiteBalance() {
 
 #undef ADD_WHITE_BALANCE
 
-    ui->whiteBalanceGroup->setEnabled(ui->whiteBalanceComboBox->count() != 0);
+    if(ui->whiteBalanceComboBox->count() != 0) {
+        ui->whiteBalanceGroup->setEnabled(true);
+        ui->whiteBalanceComboBox->setEnabled(true);
+        ui->whiteBalanceLabel->setEnabled(true);
+    }
     WhiteBalanceConnection();
 }
 

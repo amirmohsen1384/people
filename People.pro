@@ -7,6 +7,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
     main.cpp \
+    src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
     src/application.cpp \
     src/widgets/personedit.cpp \
@@ -14,8 +15,10 @@ SOURCES += \
     src/data/lastnamevalidator.cpp \
     src/data/person.cpp
 
+
 HEADERS += \
     include/application.h \
+    include/camera/camerasettings.h \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \
@@ -24,6 +27,7 @@ HEADERS += \
 
 FORMS += \
     gui/application.ui \
+    gui/camera/camerasettings.ui \
     gui/widgets/personedit.ui \
     gui/camera/photographer.ui
 

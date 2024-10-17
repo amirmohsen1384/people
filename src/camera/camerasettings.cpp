@@ -139,6 +139,9 @@ void CameraSettings::UpdateExposure() {
     ui->exposureCompensationLabel->setEnabled(camera->supportedFeatures().testFlag(QCamera::Feature::ExposureCompensation));
     ui->exposureCompensationSlider->setEnabled(camera->supportedFeatures().testFlag(QCamera::Feature::ExposureCompensation));
     ui->exposureGroup->setEnabled(ui->exposureModeComboBox->count() != 0);
+    ui->exposureModeLabel->setEnabled(ui->exposureModeComboBox->count() != 0);
+    ui->exposureModeComboBox->setEnabled(ui->exposureModeComboBox->count() != 0);
+
     ExposureConnection();
 }
 

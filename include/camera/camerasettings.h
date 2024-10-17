@@ -15,6 +15,7 @@ class CameraSettings : public QWidget
     QMediaDevices devices;
     QCamera *camera = nullptr;
     Ui::CameraSettings *ui = nullptr;
+
 private:
     void MakeConnection();
     void DeviceConnection();

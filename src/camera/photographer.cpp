@@ -35,6 +35,7 @@ void Photographer::MakeConnection() {
     connect(&camera, &QCamera::cameraDeviceChanged, this, &Photographer::UpdateController);
     connect(ui->captureButton, &QPushButton::clicked, &capture, &QImageCapture::capture);
     connect(&camera, &QCamera::activeChanged, this, &Photographer::UpdateController);
+    connect(&camera, &QCamera::activeChanged, this, &Photographer::ActiveChanged);
 
 }
 void Photographer::UpdateController() {
@@ -63,10 +64,32 @@ Photographer::Photographer(const QCameraDevice &device, QWidget *parent) : Photo
 QCameraDevice Photographer::GetCurrentDevice() const {
     return camera.cameraDevice();
 }
+
+bool Photographer::IsActive() const {
+    return camera.isActive();
+}
+
 void Photographer::SetCurrentDevice(const QCameraDevice &device) {
     camera.setCameraDevice(device);
     emit CurrentDeviceChanged(device);
 }
+
+void Photographer::SetActive(bool active) {
+    camera.setActive(active);
+}
+
+void Photographer::Start() {
+    if(camera.isAvailable() && !camera.isActive()) {
+        camera.start();
+    }
+}
+
+void Photographer::Stop() {
+    if(camera.isAvailable() && camera.isActive()) {
+        camera.stop();
+    }
+}
+
 Photographer::~Photographer() {
     delete ui;
 }

@@ -33,14 +33,20 @@ public:
     explicit Photographer(const QCameraDevice &device, QWidget *parent = nullptr);
 
     QCameraDevice GetCurrentDevice() const;
+    bool IsActive() const;
 
 public slots:
     void SetCurrentDevice(const QCameraDevice &device);
+    void SetActive(bool active);
+    void Start();
+    void Stop();
 
 signals:
     void CurrentDeviceChanged(const QCameraDevice &camera);
     void ImageCaptured(const QImage &image);
+    void ActiveChanged(bool active);
     void AvaliableDevicesChanged();
+
 };
 
 #endif // PHOTOGRAPHER_H

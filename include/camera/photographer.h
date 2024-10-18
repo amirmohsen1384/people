@@ -12,6 +12,8 @@ namespace Ui {
 class Photographer;
 }
 
+using CameraList = QList<QCameraDevice>;
+
 class Photographer : public QDialog
 {
     Q_OBJECT
@@ -33,14 +35,23 @@ public:
     explicit Photographer(const QCameraDevice &device, QWidget *parent = nullptr);
 
     QCameraDevice GetCurrentDevice() const;
+    CameraList GetAvailableDevices() const;
+    bool IsActive() const;
 
 public slots:
     void SetCurrentDevice(const QCameraDevice &device);
+    void SetActive(bool active);
+    void Start();
+    void Stop();
 
 signals:
     void CurrentDeviceChanged(const QCameraDevice &camera);
     void ImageCaptured(const QImage &image);
-    void AvaliableDevicesChanged();
+    void ActiveChanged(bool active);
+    void AvailableDevicesChanged();
+
 };
+
+
 
 #endif // PHOTOGRAPHER_H

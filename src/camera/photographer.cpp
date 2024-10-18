@@ -25,16 +25,17 @@ void Photographer::MakeConnection() {
             settings.setVisible(true);
         }
     });
-    connect(this, &Photographer::AvaliableDevicesChanged, this, [&]() {
-        if(!devices.videoInputs().isEmpty()) {
+    connect(this, &Photographer::AvailableDevicesChanged, this, [&]() {
+        if(GetAvailableDevices().isEmpty()) {
             SetCurrentDevice(devices.defaultVideoInput());
         }
     });
-    connect(&devices, &QMediaDevices::videoInputsChanged, this, &Photographer::AvaliableDevicesChanged);
+    connect(&devices, &QMediaDevices::videoInputsChanged, this, &Photographer::AvailableDevicesChanged);
     connect(&capture, &QImageCapture::readyForCaptureChanged, this, &Photographer::UpdateController);
     connect(&camera, &QCamera::cameraDeviceChanged, this, &Photographer::UpdateController);
     connect(ui->captureButton, &QPushButton::clicked, &capture, &QImageCapture::capture);
     connect(&camera, &QCamera::activeChanged, this, &Photographer::UpdateController);
+    connect(&camera, &QCamera::activeChanged, this, &Photographer::ActiveChanged);
 
 }
 void Photographer::UpdateController() {
@@ -63,10 +64,36 @@ Photographer::Photographer(const QCameraDevice &device, QWidget *parent) : Photo
 QCameraDevice Photographer::GetCurrentDevice() const {
     return camera.cameraDevice();
 }
+
+CameraList Photographer::GetAvailableDevices() const {
+    return devices.videoInputs();
+}
+
+bool Photographer::IsActive() const {
+    return camera.isActive();
+}
+
 void Photographer::SetCurrentDevice(const QCameraDevice &device) {
     camera.setCameraDevice(device);
     emit CurrentDeviceChanged(device);
 }
+
+void Photographer::SetActive(bool active) {
+    camera.setActive(active);
+}
+
+void Photographer::Start() {
+    if(camera.isAvailable() && !camera.isActive()) {
+        camera.start();
+    }
+}
+
+void Photographer::Stop() {
+    if(camera.isAvailable() && camera.isActive()) {
+        camera.stop();
+    }
+}
+
 Photographer::~Photographer() {
     delete ui;
 }

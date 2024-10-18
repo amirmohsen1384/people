@@ -24,8 +24,8 @@ class Photographer : public QDialog
     QMediaCaptureSession session;
     Ui::Photographer *ui = nullptr;
 protected:
-    virtual void closeEvent(QCloseEvent *event);
-    virtual void showEvent(QShowEvent *event);
+    virtual void closeEvent(QCloseEvent *event) override;
+    virtual void showEvent(QShowEvent *event) override;
 
 private:
     void Initialize();

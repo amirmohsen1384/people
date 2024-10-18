@@ -1,5 +1,15 @@
 #include "include/camera/photographer.h"
 #include "ui_photographer.h"
+#include <QCloseEvent>
+
+void Photographer::closeEvent(QCloseEvent *event) {
+    this->Stop();
+    event->accept();
+}
+void Photographer::showEvent(QShowEvent *event) {
+    this->Start();
+    event->accept();
+}
 
 void Photographer::Initialize() {
     session.setCamera(&camera);
@@ -52,11 +62,6 @@ Photographer::Photographer(QWidget *parent) : QDialog(parent), ui(new Ui::Photog
     // Initialize the camera device
     Initialize();
     UpdateController();
-
-    // Start the camera
-    if(camera.isAvailable()) {
-        camera.start();
-    }
 }
 Photographer::Photographer(const QCameraDevice &device, QWidget *parent) : Photographer(parent) {
     SetCurrentDevice(device);

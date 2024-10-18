@@ -13,6 +13,8 @@ class PersonEdit : public QWidget
     QPointer<Person> initial = nullptr;
     Ui::PersonEdit *ui = nullptr;
     Photographer photographer;
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
 
 protected slots:
     void UpdatePhotographerControl();

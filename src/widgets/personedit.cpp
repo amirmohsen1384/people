@@ -3,6 +3,7 @@
 #include "include/camera/photographer.h"
 #include "include/widgets/personedit.h"
 #include "ui_personedit.h"
+#include <QCloseEvent>
 
 // Constructors of the editor
 PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit)  {
@@ -148,6 +149,13 @@ const QPointer<Person> PersonEdit::GetInitialPerson() const {
 // Destructor of the editor
 PersonEdit::~PersonEdit() {
     delete ui;
+}
+
+void PersonEdit::closeEvent(QCloseEvent *event) {
+    if(photographer.isVisible()) {
+        photographer.close();
+    }
+    event->accept();
 }
 
 void PersonEdit::UpdatePhotographerControl() {

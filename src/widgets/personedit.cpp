@@ -8,7 +8,6 @@
 // Constructors of the editor
 PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit)  {
     ui->setupUi(this);
-    photographer.setParent(this);
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
 

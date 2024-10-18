@@ -5,7 +5,7 @@
 void Photographer::closeEvent(QCloseEvent *event) {
     this->Stop();
     if(settings.isVisible()) {
-        settings.setVisible(false);
+        settings.close();
     }
     event->accept();
 }

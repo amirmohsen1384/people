@@ -16,6 +16,7 @@ void Photographer::Initialize() {
     session.setImageCapture(&capture);
     session.setVideoOutput(ui->cameraView);
 
+    settings.setParent(this);
     settings.SetCamera(&camera);
     settings.setFixedSize(settings.size());
 }

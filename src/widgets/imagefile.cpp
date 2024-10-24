@@ -38,8 +38,3 @@ QPixmap PersonEdit::GetDefaultPhoto() const {
     return QPixmap(":/images/default.png");
 
 }
-void PersonEdit::LoadImage(const QImage &image) {
-    if(image.isNull()) {
-        this->SetPhoto(QPixmap());
-    }
-}

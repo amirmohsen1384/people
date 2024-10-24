@@ -1,5 +1,4 @@
-#include "../../include/data/person.h"
-#include <QPixmap>
+#include "include/data/person.h"
 
 void Person::UpdateLastModification()
 {
@@ -77,11 +76,11 @@ QDateTime Person::GetLastModification() const {
     return this->lastModification;
 
 }
-QPixmap Person::GetPhoto() const {
+QImage Person::GetPhoto() const {
     return this->photo;
 
 }
-void Person::SetPhoto(const QPixmap &value)
+void Person::SetPhoto(const QImage &value)
 {
     this->photo = value;
     emit PhotoChanged(value);

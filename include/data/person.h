@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDate>
-#include <QPixmap>
+#include <QImage>
 #include <QDataStream>
 
 class Person : public QObject
@@ -20,7 +20,7 @@ private:
     QString     lastName;
     Gender      gender = Gender::Male;
     QDate       birthday = QDate::currentDate();
-    QPixmap     photo;
+    QImage     photo;
     QDateTime   creation = QDateTime::currentDateTime();
     QDateTime   lastModification = QDateTime::currentDateTime();
 
@@ -44,8 +44,8 @@ public:
     QDate GetBirthday() const;
     void SetBirthday(const QDate &value);
 
-    QPixmap GetPhoto() const;
-    void SetPhoto(const QPixmap &value);
+    QImage GetPhoto() const;
+    void SetPhoto(const QImage &value);
 
     QDateTime GetLastModification() const;
     QDateTime GetCreation() const;
@@ -61,7 +61,7 @@ signals:
     void LastNameChanged(const QString &value);
     void GenderChanged(const Gender &value);
     void BirthdayChanged(const QDate &value);
-    void PhotoChanged(const QPixmap &value);
+    void PhotoChanged(const QImage &value);
     void LastModificationChanged(const QDateTime &value);
 };
 

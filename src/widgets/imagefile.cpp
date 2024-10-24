@@ -34,7 +34,3 @@ QImage PersonEdit::FindImageFile() {
 
     }
 }
-QPixmap PersonEdit::GetDefaultPhoto() const {
-    return QPixmap(":/images/default.png");
-
-}

@@ -6,7 +6,7 @@ void PersonView::UpdateName() {
 }
 
 void PersonView::UpdatePhoto() {
-    ui->photoView->SetImage(information.GetPhoto().toImage());
+    ui->photoView->SetImage(information.GetPhoto());
 }
 
 void PersonView::UpdateGender() {

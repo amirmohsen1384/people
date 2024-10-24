@@ -9,7 +9,7 @@ ImageView::ImageView(const QImage &image, QWidget *parent) : ImageView(parent) {
     this->SetImage(image);
 }
 QImage ImageView::GetImage() const {
-    return (this->pixmap().toImage() == QImage(":/images/default.png")) ? QImage() : this->pixmap();
+    return (this->pixmap().toImage() == QImage(":/images/default.png")) ? QImage() : this->pixmap().toImage();
 }
 void ImageView::SetImage(const QImage &image) {
     if(!image.isNull()) {

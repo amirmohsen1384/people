@@ -10,6 +10,7 @@ SOURCES += \
     src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
     src/application.cpp \
+    src/image/imageview.cpp \
     src/widgets/personview.cpp \
     src/widgets/imagefile.cpp \
     src/widgets/personedit.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     include/application.h \
     include/camera/camerasettings.h \
+    include/image/imageview.h \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \

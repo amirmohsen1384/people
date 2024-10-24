@@ -168,7 +168,7 @@ void PersonEdit::NotifyPhotographer() {
     if(!photographer.isVisible()) {
         photographer.setVisible(true);
     }
-    connect(&photographer, &Photographer::ImageCaptured, [&](const QImage &image) {
+    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
         if(photographer.isVisible()) {
             photographer.setVisible(false);
         }

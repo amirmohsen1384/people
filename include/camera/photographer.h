@@ -1,7 +1,7 @@
 #ifndef PHOTOGRAPHER_H
 #define PHOTOGRAPHER_H
 
-#include <QDialog>
+#include <QWidget>
 #include <QCamera>
 #include <QMediaDevices>
 #include <QImageCapture>
@@ -14,7 +14,7 @@ class Photographer;
 
 using CameraList = QList<QCameraDevice>;
 
-class Photographer : public QDialog
+class Photographer : public QWidget
 {
     Q_OBJECT
     QCamera camera;

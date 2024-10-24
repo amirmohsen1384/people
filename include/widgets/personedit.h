@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QPointer>
 #include "include/data/person.h"
+#include "include/camera/photographer.h"
 
 namespace Ui { class PersonEdit; }
 
@@ -11,6 +12,14 @@ class PersonEdit : public QWidget
     Q_OBJECT
     QPointer<Person> initial = nullptr;
     Ui::PersonEdit *ui = nullptr;
+    Photographer photographer;
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
+
+protected slots:
+    void UpdatePhotographerControl();
+    void NotifyPhotographer();
+
 public:
     explicit PersonEdit(QWidget *parent = nullptr);
     explicit PersonEdit(QPointer<Person> initial, QWidget *parent = nullptr);

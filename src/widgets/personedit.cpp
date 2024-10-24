@@ -1,13 +1,18 @@
 #include "include/data/firstnamevalidator.h"
 #include "include/data/lastnamevalidator.h"
+#include "include/camera/photographer.h"
 #include "include/widgets/personedit.h"
 #include "ui_personedit.h"
+#include <QCloseEvent>
 
 // Constructors of the editor
 PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit)  {
     ui->setupUi(this);
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
+
+    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
+    connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
 
     connect(ui->firstNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetFirstName);
     connect(ui->lastNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetLastName);
@@ -17,6 +22,8 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
 
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
+
+    UpdatePhotographerControl();
 
     this->initial = new Person();
     this->SetPerson(this->initial);
@@ -141,4 +148,26 @@ const QPointer<Person> PersonEdit::GetInitialPerson() const {
 // Destructor of the editor
 PersonEdit::~PersonEdit() {
     delete ui;
+}
+
+void PersonEdit::closeEvent(QCloseEvent *event) {
+    if(photographer.isVisible()) {
+        photographer.close();
+    }
+    event->accept();
+}
+
+void PersonEdit::UpdatePhotographerControl() {
+    ui->cameraButton->setVisible(!photographer.GetAvailableDevices().isEmpty());
+}
+
+void PersonEdit::NotifyPhotographer() {
+    if(!photographer.isVisible()) {
+        photographer.setVisible(true);
+    }
+    connect(&photographer, &Photographer::ImageCaptured, [&](const QImage &image) {
+
+        // Will be implemented later
+
+    });
 }

@@ -24,7 +24,7 @@ protected:
 protected slots:
     void UpdatePhotographerControl();
     void NotifyPhotographer();
-
+    void NotifyImageBrowser();
 
 public:
     explicit PersonEdit(QWidget *parent = nullptr);

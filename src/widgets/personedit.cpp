@@ -11,9 +11,6 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
 
-    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
-    connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
-
     connect(ui->firstNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetFirstName);
     connect(ui->lastNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetLastName);
     connect(ui->birthdayResetButton, &QPushButton::clicked, this, &PersonEdit::ResetBirthday);
@@ -23,9 +20,9 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
-    connect(ui->fileBrowseButton, &QPushButton::clicked, this, [&]() {
-        LoadImage(FindImageFile());
-    });
+    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
+    connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
+    connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
 
     UpdatePhotographerControl();
 
@@ -172,8 +169,14 @@ void PersonEdit::NotifyPhotographer() {
         photographer.setVisible(true);
     }
     connect(&photographer, &Photographer::ImageCaptured, [&](const QImage &image) {
-
-        // Will be implemented later
-
+        if(photographer.isVisible()) {
+            photographer.setVisible(false);
+        }
+        this->LoadImage(image);
     });
+}
+
+void PersonEdit::NotifyImageBrowser() {
+    QImage image = FindImageFile();
+    LoadImage(image);
 }

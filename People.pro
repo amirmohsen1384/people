@@ -11,6 +11,7 @@ SOURCES += \
     src/camera/photographer.cpp \
     src/application.cpp \
     src/widgets/personview.cpp \
+    src/widgets/imagefile.cpp \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
     src/data/lastnamevalidator.cpp \

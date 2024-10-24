@@ -13,12 +13,18 @@ class PersonEdit : public QWidget
     QPointer<Person> initial = nullptr;
     Ui::PersonEdit *ui = nullptr;
     Photographer photographer;
+private:
+    QImage FindImageFile();
+    QPixmap GetDefaultPhoto() const;
+    void LoadImage(const QImage &image);
+
 protected:
     virtual void closeEvent(QCloseEvent *event) override;
 
 protected slots:
     void UpdatePhotographerControl();
     void NotifyPhotographer();
+
 
 public:
     explicit PersonEdit(QWidget *parent = nullptr);

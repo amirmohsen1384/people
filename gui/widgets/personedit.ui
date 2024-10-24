@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QLabel" name="photoPreview">
+    <widget class="ImageView" name="photoPreview">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
@@ -379,6 +379,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageView</class>
+   <extends>QLabel</extends>
+   <header location="global">include/image/imageview.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>firstNameEdit</tabstop>
   <tabstop>lastNameEdit</tabstop>

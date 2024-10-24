@@ -15,8 +15,6 @@ class PersonEdit : public QWidget
     Photographer photographer;
 private:
     QImage FindImageFile();
-    QPixmap GetDefaultPhoto() const;
-    void LoadImage(const QImage &image);
 
 protected:
     virtual void closeEvent(QCloseEvent *event) override;
@@ -38,7 +36,7 @@ public:
 
     Person::Gender GetGender() const;
 
-    QPixmap GetPhoto() const;
+    QImage GetPhoto() const;
 
     QPointer<Person> GetPerson() const;
 
@@ -58,7 +56,7 @@ public slots:
     void SetGender(const Person::Gender &value);
     void ResetGender();
 
-    void SetPhoto(const QPixmap &value);
+    void SetPhoto(const QImage &value);
     void ResetPhoto();
 
     void SetPerson(const QPointer<Person> &value);
@@ -68,7 +66,7 @@ signals:
     void LastNameChanged(const QString &value);
     void BirthdayChanged(const QDate &value);
     void GenderChanged(const Person::Gender &value);
-    void PhotoChanged(const QPixmap &value);
+    void PhotoChanged(const QImage &value);
 
     void FirstNameRejected();
     void LastNameRejected();

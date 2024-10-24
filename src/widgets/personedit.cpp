@@ -23,6 +23,12 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
     connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
     connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
+    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
+        if(photographer.isVisible()) {
+            photographer.close();
+        }
+        this->SetPhoto(image);
+    });
 
     UpdatePhotographerControl();
 
@@ -100,18 +106,11 @@ void PersonEdit::ResetGender() {
 }
 
 // These functions are used to retrieve and change the photo
-QPixmap PersonEdit::GetPhoto() const {
-    const QPixmap &photo = ui->photoPreview->pixmap();
-    return (photo.toImage() != this->GetDefaultPhoto().toImage()) ? photo : QPixmap();
+QImage PersonEdit::GetPhoto() const {
+    return ui->photoPreview->GetImage();
 }
-void PersonEdit::SetPhoto(const QPixmap &value) {
-    if(!value.isNull()) {
-        ui->photoPreview->setPixmap(value);
-        emit PhotoChanged(value);
-    } else {
-        ui->photoPreview->setPixmap(this->GetDefaultPhoto());
-        emit PhotoChanged(QPixmap());
-    }
+void PersonEdit::SetPhoto(const QImage &value) {
+    ui->photoPreview->SetImage(value);
 }
 void PersonEdit::ResetPhoto() {
     this->SetPhoto(initial->GetPhoto());
@@ -166,17 +165,10 @@ void PersonEdit::UpdatePhotographerControl() {
 
 void PersonEdit::NotifyPhotographer() {
     if(!photographer.isVisible()) {
-        photographer.setVisible(true);
+        photographer.show();
     }
-    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
-        if(photographer.isVisible()) {
-            photographer.setVisible(false);
-        }
-        this->LoadImage(image);
-    });
 }
 
 void PersonEdit::NotifyImageBrowser() {
-    QImage image = FindImageFile();
-    LoadImage(image);
+    this->SetPhoto(FindImageFile());
 }

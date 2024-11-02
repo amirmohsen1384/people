@@ -1,11 +1,17 @@
 #ifndef IMAGEVIEW_H
 #define IMAGEVIEW_H
 
-#include <QLabel>
+#include <QWidget>
+#include <QImage>
 
-class ImageView : public QLabel
+class ImageView : public QWidget
 {
     Q_OBJECT
+    QImage image;
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public:
     ImageView(QWidget *parent = nullptr);
     ImageView(const QImage &image, QWidget *parent = nullptr);

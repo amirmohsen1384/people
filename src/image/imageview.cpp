@@ -1,27 +1,37 @@
 #include "include/image/imageview.h"
+#include <QPaintEvent>
+#include <QPainter>
 
-ImageView::ImageView(QWidget *parent) : QLabel(parent) {
-    this->SetImage(QImage());
-    this->setScaledContents(true);
-    this->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+void ImageView::paintEvent(QPaintEvent *event) {
+    QWidget::paintEvent(event);
+
+    QImage image = QImage();
+    const QRect &region = event->rect();
+
+    if(image.isNull()) {
+        image = GetEmptyImage();
+
+    } else {
+        image = this->image;
+
+    }
+
+    QPainter painter(this);
+    painter.drawImage(image.rect(), image, region);
 }
+
+ImageView::ImageView(QWidget *parent) : QWidget(parent) {}
 ImageView::ImageView(const QImage &image, QWidget *parent) : ImageView(parent) {
     this->SetImage(image);
 }
+
 QImage ImageView::GetImage() const {
-    const QImage &image = this->pixmap().toImage();
-    return image == GetEmptyImage() ? QImage() : image;
+    return image;
 }
 QImage ImageView::GetEmptyImage() const {
     return QImage(":/images/default.png");
 }
 void ImageView::SetImage(const QImage &image) {
-    if(!image.isNull()) {
-        this->setPixmap(QPixmap::fromImage(image));
-
-    } else {
-        this->setPixmap(GetEmptyImage());
-
-    }
+    this->image = image;
     emit ImageChanged(GetImage());
 }

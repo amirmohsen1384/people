@@ -15,36 +15,12 @@
   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="ImageView" name="photoPreview">
+    <widget class="ImageView" name="imageView" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::Box</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Sunken</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>../../resources/images/default.png</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -382,8 +358,9 @@
  <customwidgets>
   <customwidget>
    <class>ImageView</class>
-   <extends>QLabel</extends>
-   <header location="global">include/image/imageview.h</header>
+   <extends>QWidget</extends>
+   <header>include/image/imageview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

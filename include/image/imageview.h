@@ -9,6 +9,8 @@ class ImageView : public QLabel
 public:
     ImageView(QWidget *parent = nullptr);
     ImageView(const QImage &image, QWidget *parent = nullptr);
+
+    QImage GetEmptyImage() const;
     QImage GetImage() const;
 
 public slots:

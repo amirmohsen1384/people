@@ -20,26 +20,16 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
-    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
     connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
+    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
+
     connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
-    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
-        if(photographer.isVisible()) {
-            photographer.close();
-        }
-        this->SetPhoto(image);
-    });
 
     UpdatePhotographerControl();
-
-    this->initial = new Person();
-    this->SetPerson(this->initial);
+    ResetPerson();
 }
-PersonEdit::PersonEdit(QPointer<Person> initial, QWidget *parent) : PersonEdit(parent) {
-    if(!initial.isNull()) {
-        this->initial = initial;
-    }
-    this->SetPerson(this->initial);
+PersonEdit::PersonEdit(const Person &initial, QWidget *parent) : PersonEdit(parent) {
+    this->SetPerson(initial);
 }
 
 // These functions are used to retrieve and change the first name
@@ -51,7 +41,7 @@ void PersonEdit::SetFirstName(const QString &value) {
     emit FirstNameChanged(value);
 }
 void PersonEdit::ResetFirstName() {
-    this->SetFirstName(initial->GetFirstName());
+    this->SetFirstName(initial.GetFirstName());
 }
 
 // These functions are used to retrieve and change the last name
@@ -63,7 +53,7 @@ void PersonEdit::SetLastName(const QString &value) {
     emit LastNameChanged(value);
 }
 void PersonEdit::ResetLastName() {
-    this->SetLastName(initial->GetLastName());
+    this->SetLastName(initial.GetLastName());
 }
 
 // These functions are used to retrieve and change the birthday
@@ -75,7 +65,7 @@ void PersonEdit::SetBirthday(const QDate &value) {
     emit BirthdayChanged(value);
 }
 void PersonEdit::ResetBirthday() {
-    this->SetBirthday(initial->GetBirthday());
+    this->SetBirthday(initial.GetBirthday());
 }
 
 // These functions are used to retrieve and change the gender
@@ -95,56 +85,53 @@ void PersonEdit::SetGender(const Person::Gender &value) {
             break;
         }
         case Person::Gender::Female: {
-            ui->femaleRadioButton->setChecked(false);
+            ui->femaleRadioButton->setChecked(true);
             break;
         }
     }
     emit GenderChanged(value);
 }
 void PersonEdit::ResetGender() {
-    this->SetGender(initial->GetGender());
+    this->SetGender(initial.GetGender());
 }
 
 // These functions are used to retrieve and change the photo
-QImage PersonEdit::GetPhoto() const {
-    return ui->photoPreview->GetImage();
-}
 void PersonEdit::SetPhoto(const QImage &value) {
-    ui->photoPreview->SetImage(value);
+    ui->imageView->SetImage(value);
+}
+QImage PersonEdit::GetPhoto() const {
+    return ui->imageView->GetImage();
 }
 void PersonEdit::ResetPhoto() {
-    this->SetPhoto(initial->GetPhoto());
+    this->SetPhoto(initial.GetPhoto());
 }
 
 // You could use these two functions to retrieve and change the whole information at the time
-QPointer<Person> PersonEdit::GetPerson() const {
-    QPointer<Person> person = new Person();
-    person->SetFirstName(this->GetFirstName());
-    person->SetLastName(this->GetLastName());
-    person->SetBirthday(this->GetBirthday());
-    person->SetGender(this->GetGender());
-    person->SetPhoto(this->GetPhoto());
-    return person;
+Person PersonEdit::GetInitialPerson() const {
+    return initial;
 }
-void PersonEdit::SetPerson(const QPointer<Person> &value) {
-    if(value.isNull()) {
-        return;
-    }
-    this->SetFirstName(value->GetFirstName());
-    this->SetLastName(value->GetLastName());
-    this->SetBirthday(value->GetBirthday());
-    this->SetGender(value->GetGender());
-    this->SetPhoto(value->GetPhoto());
+void PersonEdit::SetPerson(const Person &value) {
+    this->SetFirstName(value.GetFirstName());
+    this->SetLastName(value.GetLastName());
+    this->SetBirthday(value.GetBirthday());
+    this->SetGender(value.GetGender());
+    this->SetPhoto(value.GetPhoto());
+}
+Person PersonEdit::GetPerson() const {
+    Person person;
+    person.SetFirstName(this->GetFirstName());
+    person.SetLastName(this->GetLastName());
+    person.SetBirthday(this->GetBirthday());
+    person.SetGender(this->GetGender());
+    person.SetPhoto(this->GetPhoto());
+    return person;
 }
 void PersonEdit::ResetPerson() {
     ResetFirstName();
     ResetLastName();
     ResetBirthday();
     ResetGender();
-}
-
-const QPointer<Person> PersonEdit::GetInitialPerson() const {
-    return initial;
+    ResetPhoto();
 }
 
 // Destructor of the editor
@@ -167,6 +154,12 @@ void PersonEdit::NotifyPhotographer() {
     if(!photographer.isVisible()) {
         photographer.show();
     }
+    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
+        if(photographer.isVisible()) {
+            photographer.close();
+        }
+        this->SetPhoto(image);
+    });
 }
 
 void PersonEdit::NotifyImageBrowser() {

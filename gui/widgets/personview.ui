@@ -15,15 +15,12 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="ImageView" name="photoView">
+    <widget class="ImageView" name="imageView" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
-     </property>
-     <property name="text">
-      <string/>
      </property>
     </widget>
    </item>
@@ -175,8 +172,9 @@
  <customwidgets>
   <customwidget>
    <class>ImageView</class>
-   <extends>QLabel</extends>
+   <extends>QWidget</extends>
    <header>include/image/imageview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

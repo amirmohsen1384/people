@@ -15,6 +15,9 @@ class PersonView : public QWidget
     Ui::PersonView *ui = nullptr;
 
 private slots:
+    void UpdatePerson();
+
+private slots:
     void UpdateName();
     void UpdatePhoto();
     void UpdateGender();
@@ -27,11 +30,13 @@ public:
     explicit PersonView(Person &value, QWidget *parent = nullptr);
     ~PersonView();
 
-    Person& GetPerson();
-    void SetPerson(Person &data);
+    Person GetPerson() const;
+
+public slots:
+    void SetPerson(const Person &data);
 
 signals:
-    void PersonChanged(Person &data);
+    void PersonChanged(const Person &data);
 };
 
 #endif // PERSONVIEW_H

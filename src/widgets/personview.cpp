@@ -1,12 +1,21 @@
 #include "include/widgets/personview.h"
 #include "ui_personview.h"
 
+void PersonView::UpdatePerson() {
+    UpdateName();
+    UpdateBirthday();
+    UpdateGender();
+    UpdatePhoto();
+    UpdateCreation();
+    UpdateLastModification();
+}
+
 void PersonView::UpdateName() {
     ui->fullName->setText(information.GetFullName());
 }
 
 void PersonView::UpdatePhoto() {
-    ui->photoView->SetImage(information.GetPhoto());
+    ui->imageView->SetImage(information.GetPhoto());
 }
 
 void PersonView::UpdateGender() {
@@ -33,27 +42,22 @@ void PersonView::UpdateLastModification() {
 
 PersonView::PersonView(QWidget *parent) : QWidget(parent), ui(new Ui::PersonView) {
     ui->setupUi(this);
-    connect(&information, &Person::PhotoChanged, this, &PersonView::UpdatePhoto);
-    connect(&information, &Person::GenderChanged, this, &PersonView::UpdateGender);
-    connect(&information, &Person::LastNameChanged, this, &PersonView::UpdateName);
-    connect(&information, &Person::FirstNameChanged, this, &PersonView::UpdateName);
-    connect(&information, &Person::BirthdayChanged, this, &PersonView::UpdateBirthday);
-    connect(&information, &PersonView::PersonChanged, this, &PersonView::UpdateCreation);
-    connect(&information, &Person::LastModificationChanged, this, &PersonView::UpdateLastModification);
+    connect(this, &PersonView::PersonChanged, this, &PersonView::UpdatePerson);
 }
 
 PersonView::PersonView(Person &value, QWidget *parent) : PersonView(parent) {
     this->SetPerson(value);
 }
+
 PersonView::~PersonView() {
     delete ui;
 }
 
-Person &PersonView::GetPerson() {
+Person PersonView::GetPerson() const {
     return information;
 }
 
-void PersonView::SetPerson(Person &data) {
+void PersonView::SetPerson(const Person &data) {
     information = data;
     emit PersonChanged(information);
 }

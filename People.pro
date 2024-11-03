@@ -12,7 +12,6 @@ SOURCES += \
     src/application.cpp \
     src/image/imageview.cpp \
     src/widgets/personview.cpp \
-    src/widgets/imagefile.cpp \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
     src/data/lastnamevalidator.cpp \

@@ -10,7 +10,8 @@ class ImageView : public QWidget
     QImage image;
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    virtual void paintEvent(QPaintEvent *event);
+    virtual void updateImage();
 
 public:
     ImageView(QWidget *parent = nullptr);

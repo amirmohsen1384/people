@@ -27,7 +27,7 @@ private slots:
 
 public:
     explicit PersonView(QWidget *parent = nullptr);
-    explicit PersonView(Person &value, QWidget *parent = nullptr);
+    explicit PersonView(const Person &value, QWidget *parent = nullptr);
     ~PersonView();
 
     Person GetPerson() const;

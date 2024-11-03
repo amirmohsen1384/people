@@ -45,7 +45,7 @@ PersonView::PersonView(QWidget *parent) : QWidget(parent), ui(new Ui::PersonView
     connect(this, &PersonView::PersonChanged, this, &PersonView::UpdatePerson);
 }
 
-PersonView::PersonView(Person &value, QWidget *parent) : PersonView(parent) {
+PersonView::PersonView(const Person &value, QWidget *parent) : PersonView(parent) {
     this->SetPerson(value);
 }
 

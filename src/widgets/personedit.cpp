@@ -10,6 +10,7 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     ui->setupUi(this);
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
+    photographer.setAttribute(Qt::WA_DeleteOnClose, false);
 
     connect(ui->firstNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetFirstName);
     connect(ui->lastNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetLastName);
@@ -155,9 +156,6 @@ void PersonEdit::NotifyPhotographer() {
         photographer.show();
     }
     connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
-        if(photographer.isVisible()) {
-            photographer.close();
-        }
         this->SetPhoto(image);
     });
 }

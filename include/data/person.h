@@ -13,6 +13,7 @@ public:
         Male,
         Female
     };
+    Q_ENUM(Gender)
 
 private:
     Q_OBJECT
@@ -20,7 +21,7 @@ private:
     QString     lastName;
     Gender      gender = Gender::Male;
     QDate       birthday = QDate::currentDate();
-    QImage     photo;
+    QImage      photo;
     QDateTime   creation = QDateTime::currentDateTime();
     QDateTime   lastModification = QDateTime::currentDateTime();
 
@@ -28,7 +29,7 @@ private slots:
     void UpdateLastModification();
 
 public:
-    explicit Person(QObject *parent = nullptr);
+    Person(QObject *parent = nullptr);
     Person& operator=(const Person &another);
     Person(const Person &another, QObject *parent = nullptr);
 
@@ -38,7 +39,7 @@ public:
     QString GetLastName() const;
     void SetLastName(const QString &value);
 
-    Gender GetGender() const;
+    Person::Gender GetGender() const;
     void SetGender(const Gender &value);
 
     QDate GetBirthday() const;
@@ -65,8 +66,8 @@ signals:
     void LastModificationChanged(const QDateTime &value);
 };
 
-typedef QList<Person> PersonList;
-typedef QListIterator<Person> PersonListIterator;
+using PersonList = QList<Person>;
+using PersonListIterator = QListIterator<PersonList>;
 
 Q_DECLARE_METATYPE(Person)
 

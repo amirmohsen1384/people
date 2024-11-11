@@ -1,7 +1,7 @@
 #ifndef PHOTOGRAPHER_H
 #define PHOTOGRAPHER_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QCamera>
 #include <QMediaDevices>
 #include <QImageCapture>
@@ -14,7 +14,7 @@ class Photographer;
 
 using CameraList = QList<QCameraDevice>;
 
-class Photographer : public QWidget
+class Photographer : public QDialog
 {
     Q_OBJECT
     QCamera camera;
@@ -23,6 +23,7 @@ class Photographer : public QWidget
     CameraSettings settings;
     QMediaCaptureSession session;
     Ui::Photographer *ui = nullptr;
+
 protected:
     virtual void closeEvent(QCloseEvent *event) override;
     virtual void showEvent(QShowEvent *event) override;

@@ -18,7 +18,6 @@ protected:
 
 protected slots:
     void UpdatePhotographerControl();
-    void NotifyPhotographer();
     void NotifyImageBrowser();
     QImage FindImageFile();
 

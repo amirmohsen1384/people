@@ -3,14 +3,16 @@
 #include <QCloseEvent>
 
 void Photographer::closeEvent(QCloseEvent *event) {
-    this->Stop();
-    if(settings.isVisible()) {
-        settings.close();
+    if(this->IsActive()) {
+        this->Stop();
     }
+    this->setResult(QDialog::Rejected);
     event->accept();
 }
 void Photographer::showEvent(QShowEvent *event) {
-    this->Start();
+    if(!this->IsActive()) {
+        this->Start();
+    }
     event->accept();
 }
 
@@ -22,6 +24,7 @@ void Photographer::Initialize() {
     settings.SetCamera(&camera);
     settings.setFixedSize(settings.size());
 }
+
 void Photographer::MakeConnection() {
     connect(&capture, &QImageCapture::imageCaptured, this, [&](int id, const QImage &preview) {
         Q_UNUSED(id)
@@ -49,13 +52,14 @@ void Photographer::MakeConnection() {
     connect(ui->captureButton, &QPushButton::clicked, &capture, &QImageCapture::capture);
     connect(&camera, &QCamera::activeChanged, this, &Photographer::UpdateController);
     connect(&camera, &QCamera::activeChanged, this, &Photographer::ActiveChanged);
-
+    connect(this, &Photographer::ImageCaptured, this, &QDialog::accept);
 }
+
 void Photographer::UpdateController() {
     ui->optionsButton->setEnabled(camera.isAvailable());
     ui->captureButton->setEnabled(capture.isReadyForCapture());
 }
-Photographer::Photographer(QWidget *parent) : QWidget(parent), ui(new Ui::Photographer) {
+Photographer::Photographer(QWidget *parent) : QDialog(parent), ui(new Ui::Photographer) {
     // Setup the user interface
     ui->setupUi(this);
 

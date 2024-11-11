@@ -23,10 +23,11 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
+    connect(ui->cameraButton, &QPushButton::clicked, &photographer, &Photographer::exec);
     connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
-    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
 
     connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
+    connect(&photographer, &Photographer::ImageCaptured, this, &PersonEdit::SetPhoto);
 
     UpdatePhotographerControl();
     ResetPerson();
@@ -148,20 +149,9 @@ void PersonEdit::closeEvent(QCloseEvent *event) {
     }
     event->accept();
 }
-
 void PersonEdit::UpdatePhotographerControl() {
     ui->cameraButton->setVisible(!photographer.GetAvailableDevices().isEmpty());
 }
-
-void PersonEdit::NotifyPhotographer() {
-    if(!photographer.isVisible()) {
-        photographer.show();
-    }
-    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
-        this->SetPhoto(image);
-    });
-}
-
 void PersonEdit::NotifyImageBrowser() {
     this->SetPhoto(FindImageFile());
 }

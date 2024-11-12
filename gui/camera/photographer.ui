@@ -3,14 +3,14 @@
  <class>Photographer</class>
  <widget class="QDialog" name="Photographer">
   <property name="windowModality">
-   <enum>Qt::WindowModality::WindowModal</enum>
+   <enum>Qt::WindowModality::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
-    <height>506</height>
+    <width>1280</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -98,6 +98,9 @@
          <height>32</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
@@ -124,6 +127,9 @@
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="CameraSettings" name="settings" native="true"/>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -131,6 +137,12 @@
    <class>QVideoWidget</class>
    <extends>QWidget</extends>
    <header location="global">qvideowidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CameraSettings</class>
+   <extends>QWidget</extends>
+   <header>include/camera/camerasettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

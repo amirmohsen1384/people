@@ -5,7 +5,6 @@
 #include <QCamera>
 #include <QMediaDevices>
 #include <QImageCapture>
-#include "camerasettings.h"
 #include <QMediaCaptureSession>
 
 namespace Ui {
@@ -20,27 +19,27 @@ class Photographer : public QDialog
     QCamera camera;
     QMediaDevices devices;
     QImageCapture capture;
-    CameraSettings settings;
     QMediaCaptureSession session;
     Ui::Photographer *ui = nullptr;
 
 protected:
-    virtual void closeEvent(QCloseEvent *event) override;
     virtual void showEvent(QShowEvent *event) override;
 
 private:
     void Initialize();
     void MakeConnection();
     void UpdateController();
+    void DeviceConnection();
+    void CaptureConnection();
 
 public:
     ~Photographer();
     explicit Photographer(QWidget *parent = nullptr);
     explicit Photographer(const QCameraDevice &device, QWidget *parent = nullptr);
 
+    bool IsActive() const;
     QCameraDevice GetCurrentDevice() const;
     CameraList GetAvailableDevices() const;
-    bool IsActive() const;
 
 public slots:
     void SetCurrentDevice(const QCameraDevice &device);

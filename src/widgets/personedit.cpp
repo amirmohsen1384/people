@@ -12,7 +12,6 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     ui->setupUi(this);
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
-    photographer.setAttribute(Qt::WA_DeleteOnClose, false);
 
     connect(ui->firstNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetFirstName);
     connect(ui->lastNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetLastName);
@@ -23,13 +22,12 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
-    connect(ui->cameraButton, &QPushButton::clicked, &photographer, &Photographer::exec);
+    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
     connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
 
-    connect(&photographer, &Photographer::AvailableDevicesChanged, this, &PersonEdit::UpdatePhotographerControl);
-    connect(&photographer, &Photographer::ImageCaptured, this, &PersonEdit::SetPhoto);
-
+    connect(&devices, &QMediaDevices::videoInputsChanged, this, &PersonEdit::UpdatePhotographerControl);
     UpdatePhotographerControl();
+
     ResetPerson();
 }
 PersonEdit::PersonEdit(const Person &initial, QWidget *parent) : PersonEdit(parent) {
@@ -143,17 +141,21 @@ PersonEdit::~PersonEdit() {
     delete ui;
 }
 
-void PersonEdit::closeEvent(QCloseEvent *event) {
-    if(photographer.isVisible()) {
-        photographer.close();
-    }
-    event->accept();
-}
 void PersonEdit::UpdatePhotographerControl() {
-    ui->cameraButton->setVisible(!photographer.GetAvailableDevices().isEmpty());
+    ui->cameraButton->setVisible(!devices.videoInputs().isEmpty());
 }
 void PersonEdit::NotifyImageBrowser() {
     this->SetPhoto(FindImageFile());
+}
+
+void PersonEdit::NotifyPhotographer() {
+    Photographer photographer(this);
+    connect(&photographer, &Photographer::ImageCaptured, this, [&](const QImage &image) {
+        this->SetPhoto(image);
+    });
+    if(photographer.exec() == QDialog::Accepted) {
+        photographer.Stop();
+    }
 }
 
 // This function is used to return a list of supported filter used in image file dialog

@@ -1,8 +1,9 @@
 #ifndef PERSONEDIT_H
 #define PERSONEDIT_H
 #include <QWidget>
+#include <QCameraDevice>
+#include <QMediaDevices>
 #include "include/data/person.h"
-#include "include/camera/photographer.h"
 
 namespace Ui { class PersonEdit; }
 
@@ -10,15 +11,13 @@ class PersonEdit : public QWidget
 {
     Q_OBJECT
     Ui::PersonEdit *ui = nullptr;
-    Photographer photographer;
+    QMediaDevices devices;
     Person initial;
-
-protected:
-    virtual void closeEvent(QCloseEvent *event) override;
 
 protected slots:
     void UpdatePhotographerControl();
     void NotifyImageBrowser();
+    void NotifyPhotographer();
     QImage FindImageFile();
 
 public:

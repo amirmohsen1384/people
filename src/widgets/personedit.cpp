@@ -13,6 +13,8 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     ui->firstNameEdit->setValidator(new FirstNameValidator());
     ui->lastNameEdit->setValidator(new LastNameValidator());
 
+    connect(this, &PersonEdit::InitialChanged, this, &PersonEdit::SetPerson);
+
     connect(ui->firstNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetFirstName);
     connect(ui->lastNameResetButton, &QPushButton::clicked, this, &PersonEdit::ResetLastName);
     connect(ui->birthdayResetButton, &QPushButton::clicked, this, &PersonEdit::ResetBirthday);
@@ -22,8 +24,8 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->firstNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::FirstNameRejected);
     connect(ui->lastNameEdit, &QLineEdit::inputRejected, this, &PersonEdit::LastNameRejected);
 
-    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
     connect(ui->fileBrowseButton, &QPushButton::clicked, this, &PersonEdit::NotifyImageBrowser);
+    connect(ui->cameraButton, &QPushButton::clicked, this, &PersonEdit::NotifyPhotographer);
 
     connect(&devices, &QMediaDevices::videoInputsChanged, this, &PersonEdit::UpdatePhotographerControl);
     UpdatePhotographerControl();
@@ -31,7 +33,7 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     ResetPerson();
 }
 PersonEdit::PersonEdit(const Person &initial, QWidget *parent) : PersonEdit(parent) {
-    this->SetPerson(initial);
+    this->SetInitial(initial);
 }
 
 // These functions are used to retrieve and change the first name
@@ -109,7 +111,7 @@ void PersonEdit::ResetPhoto() {
 }
 
 // You could use these two functions to retrieve and change the whole information at the time
-Person PersonEdit::GetInitialPerson() const {
+Person PersonEdit::GetInitial() const {
     return initial;
 }
 void PersonEdit::SetPerson(const Person &value) {
@@ -134,6 +136,11 @@ void PersonEdit::ResetPerson() {
     ResetBirthday();
     ResetGender();
     ResetPhoto();
+}
+
+void PersonEdit::SetInitial(const Person &value) {
+    initial = value;
+    emit InitialChanged(value);
 }
 
 // Destructor of the editor

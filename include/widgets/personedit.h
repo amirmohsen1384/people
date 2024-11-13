@@ -26,12 +26,13 @@ public:
     ~PersonEdit();
 
     Person::Gender GetGender() const;
-    Person GetInitialPerson() const;
     QString GetFirstName() const;
     QString GetLastName() const;
     QDate GetBirthday() const;
+    Person GetInitial() const;
     Person GetPerson() const;
     QImage GetPhoto() const;
+
 
 public slots:
     void SetFirstName(const QString &value);
@@ -52,14 +53,18 @@ public slots:
     void SetPerson(const Person &value);
     void ResetPerson();
 
+    void SetInitial(const Person &value);
+
 signals:
     void FirstNameChanged(const QString &value);
     void LastNameChanged(const QString &value);
     void BirthdayChanged(const QDate &value);
+    void InitialChanged(const Person &value);
     void GenderChanged(const Person::Gender &value);
     void PhotoChanged(const QImage &value);
     void FirstNameRejected();
     void LastNameRejected();
+
 };
 
 #endif // PERSONEDIT_H

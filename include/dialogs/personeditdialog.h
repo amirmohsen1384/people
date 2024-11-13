@@ -10,8 +10,12 @@ class PersonEditDialog;
 
 class PersonEditDialog : public QDialog
 {
-    Q_OBJECT
+    const QSize fixedSize = QSize(1000, 900);
     Ui::PersonEditDialog *ui = nullptr;
+    Q_OBJECT
+
+protected:
+    virtual QSize sizeHint() const;
 
 public:
     explicit PersonEditDialog(const Person &info, QWidget *parent = nullptr);

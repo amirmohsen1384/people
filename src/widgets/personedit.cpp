@@ -152,7 +152,10 @@ void PersonEdit::UpdatePhotographerControl() {
     ui->cameraButton->setVisible(!devices.videoInputs().isEmpty());
 }
 void PersonEdit::NotifyImageBrowser() {
-    this->SetPhoto(FindImageFile());
+    const QImage &image = FindImageFile();
+    if(!image.isNull()) {
+        this->SetPhoto(image);
+    }
 }
 
 void PersonEdit::NotifyPhotographer() {

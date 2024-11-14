@@ -1,24 +1,25 @@
-#include "include/dialogs/personeditdialog.h"
-#include "ui_personeditdialog.h"
+#include "include/dialogs/personeditor.h"
+#include "ui_personeditor.h"
 
-PersonEditDialog::PersonEditDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PersonEditDialog) {
+PersonEditor::PersonEditor(QWidget *parent) : QDialog(parent), ui(new Ui::PersonEditor) {
     ui->setupUi(this);
     setFixedSize(size);
 
-    connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditDialog::updateTitle);
     updateTitle();
+    connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditor::updateTitle);
 }
-PersonEditDialog::PersonEditDialog(const Person &info, QWidget *parent)  : PersonEditDialog(parent) {
+PersonEditor::PersonEditor(const Person &info, QWidget *parent)  : PersonEditor(parent) {
     this->SetPerson(info);
 }
-PersonEditDialog::~PersonEditDialog() {
+PersonEditor::~PersonEditor() {
     delete ui;
 }
 
-QSize PersonEditDialog::sizeHint() const {
+QSize PersonEditor::sizeHint() const {
     return size;
 }
-void PersonEditDialog::updateTitle() {
+
+void PersonEditor::updateTitle() {
     const Person &person = ui->mainForm->GetInitial();
     if(person.GetFirstName().isEmpty() || person.GetLastName().isEmpty()) {
         this->setWindowTitle("Unnamed Person");
@@ -29,16 +30,16 @@ void PersonEditDialog::updateTitle() {
     }
 }
 
-Person PersonEditDialog::GetPerson() const {
+Person PersonEditor::GetPerson() const {
     return ui->mainForm->GetPerson();
 }
-void PersonEditDialog::SetPerson(const Person &person) {
+void PersonEditor::SetPerson(const Person &person) {
     ui->mainForm->SetInitial(person);
     emit PersonChanged(person);
 }
 
 #include <QMessageBox>
-void PersonEditDialog::accept() {
+void PersonEditor::accept() {
     if(ui->mainForm->GetFirstName().isEmpty()) {
         QMessageBox::warning(nullptr, "Error", "You have not entered the first name.");
         return;

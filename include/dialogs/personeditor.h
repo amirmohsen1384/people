@@ -1,17 +1,17 @@
-#ifndef PERSONEDITDIALOG_H
-#define PERSONEDITDIALOG_H
+#ifndef PERSONEDITOR_H
+#define PERSONEDITOR_H
 
 #include <QDialog>
 #include "include/data/person.h"
 
 namespace Ui {
-class PersonEditDialog;
+class PersonEditor;
 }
 
-class PersonEditDialog : public QDialog
+class PersonEditor : public QDialog
 {
     const QSize size = QSize(900, 900);
-    Ui::PersonEditDialog *ui = nullptr;
+    Ui::PersonEditor *ui = nullptr;
     Q_OBJECT
 
 protected:
@@ -21,10 +21,10 @@ protected slots:
     void updateTitle();
 
 public:
-    explicit PersonEditDialog(const Person &info, QWidget *parent = nullptr);
-    explicit PersonEditDialog(QWidget *parent = nullptr);
+    explicit PersonEditor(const Person &info, QWidget *parent = nullptr);
+    explicit PersonEditor(QWidget *parent = nullptr);
     Person GetPerson() const;
-    ~PersonEditDialog();
+    ~PersonEditor();
 
 public slots:
     void SetPerson(const Person &person);
@@ -35,4 +35,4 @@ signals:
 
 };
 
-#endif // PERSONEDITDIALOG_H
+#endif // PERSONEDITOR_H

@@ -7,10 +7,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
     main.cpp \
-    src/dialogs/personeditdialog.cpp \
     src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
     src/application.cpp \
+    src/dialogs/personeditor.cpp \
     src/image/imageview.cpp \
     src/widgets/personview.cpp \
     src/widgets/personedit.cpp \
@@ -22,22 +22,22 @@ SOURCES += \
 HEADERS += \
     include/application.h \
     include/camera/camerasettings.h \
+    include/dialogs/personeditor.h \
     include/image/imageview.h \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \
     include/data/person.h \
     include/widgets/personview.h \
-    include/camera/photographer.h \
-    include/dialogs/personeditdialog.h
+    include/camera/photographer.h
 
 FORMS += \
     gui/application.ui \
     gui/camera/camerasettings.ui \
+    gui/dialogs/personeditor.ui \
     gui/widgets/personedit.ui \
     gui/widgets/personview.ui \
-    gui/camera/photographer.ui \
-    gui/dialogs/personeditdialog.ui
+    gui/camera/photographer.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

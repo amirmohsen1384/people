@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PersonEditDialog</class>
- <widget class="QDialog" name="PersonEditDialog">
+ <class>PersonEditor</class>
+ <widget class="QDialog" name="PersonEditor">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>900</width>
     <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string/>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -49,7 +55,7 @@
   <connection>
    <sender>controlBox</sender>
    <signal>accepted()</signal>
-   <receiver>PersonEditDialog</receiver>
+   <receiver>PersonEditor</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -65,7 +71,7 @@
   <connection>
    <sender>controlBox</sender>
    <signal>rejected()</signal>
-   <receiver>PersonEditDialog</receiver>
+   <receiver>PersonEditor</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -3,17 +3,30 @@
 
 PersonEditDialog::PersonEditDialog(QWidget *parent) : QDialog(parent), ui(new Ui::PersonEditDialog) {
     ui->setupUi(this);
-    setFixedSize(fixedSize);
+    setFixedSize(size);
+
+    connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditDialog::updateTitle);
+    updateTitle();
 }
 PersonEditDialog::PersonEditDialog(const Person &info, QWidget *parent)  : PersonEditDialog(parent) {
-    ui->mainForm->SetInitial(info);
+    this->SetPerson(info);
 }
 PersonEditDialog::~PersonEditDialog() {
     delete ui;
 }
 
 QSize PersonEditDialog::sizeHint() const {
-    return fixedSize;
+    return size;
+}
+void PersonEditDialog::updateTitle() {
+    const Person &person = ui->mainForm->GetInitial();
+    if(person.GetFirstName().isEmpty() || person.GetLastName().isEmpty()) {
+        this->setWindowTitle("Unnamed Person");
+
+    } else {
+        this->setWindowTitle(person.GetFullName());
+
+    }
 }
 
 Person PersonEditDialog::GetPerson() const {

@@ -2,18 +2,64 @@
 <ui version="4.0">
  <class>PersonViewer</class>
  <widget class="QDialog" name="PersonViewer">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>900</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="2">
+    <widget class="PersonView" name="viewer" native="true"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="editButton">
+     <property name="text">
+      <string>Edit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <spacer name="spacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>640</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="Line" name="seperator">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PersonView</class>
+   <extends>QWidget</extends>
+   <header>include/widgets/personview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

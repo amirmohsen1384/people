@@ -383,6 +383,9 @@
   <tabstop>lastNameEdit</tabstop>
   <tabstop>birthdayEdit</tabstop>
   <tabstop>maleRadioButton</tabstop>
+  <tabstop>femaleRadioButton</tabstop>
+  <tabstop>fileBrowseButton</tabstop>
+  <tabstop>cameraButton</tabstop>
   <tabstop>firstNameResetButton</tabstop>
   <tabstop>lastNameResetButton</tabstop>
   <tabstop>birthdayResetButton</tabstop>

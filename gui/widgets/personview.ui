@@ -88,7 +88,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Text</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -102,9 +102,6 @@
        </property>
        <property name="text">
         <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="../../resources/resources.qrc">:/icons/gender/man.ico</pixmap>
        </property>
       </widget>
      </item>
@@ -177,8 +174,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

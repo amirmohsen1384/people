@@ -18,7 +18,7 @@ protected:
     virtual QSize sizeHint() const;
 
 protected slots:
-    void updateTitle();
+    void UpdateTitle();
 
 public:
     explicit PersonEditor(const Person &info, QWidget *parent = nullptr);

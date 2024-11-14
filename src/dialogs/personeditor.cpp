@@ -5,8 +5,13 @@ PersonEditor::PersonEditor(QWidget *parent) : QDialog(parent), ui(new Ui::Person
     ui->setupUi(this);
     setFixedSize(size);
 
-    updateTitle();
-    connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditor::updateTitle);
+    UpdateTitle();
+    connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditor::UpdateTitle);
+    connect(ui->controlBox, &QDialogButtonBox::clicked, this, [&](QAbstractButton *button) {
+        if(ui->controlBox->buttonRole(button) == QDialogButtonBox::ResetRole) {
+            ui->mainForm->ResetPerson();
+        }
+    });
 }
 PersonEditor::PersonEditor(const Person &info, QWidget *parent)  : PersonEditor(parent) {
     this->SetPerson(info);
@@ -19,7 +24,7 @@ QSize PersonEditor::sizeHint() const {
     return size;
 }
 
-void PersonEditor::updateTitle() {
+void PersonEditor::UpdateTitle() {
     const Person &person = ui->mainForm->GetInitial();
     if(person.GetFirstName().isEmpty() || person.GetLastName().isEmpty()) {
         this->setWindowTitle("Unnamed Person");

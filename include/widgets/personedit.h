@@ -1,7 +1,8 @@
 #ifndef PERSONEDIT_H
 #define PERSONEDIT_H
 #include <QWidget>
-#include <QPointer>
+#include <QCameraDevice>
+#include <QMediaDevices>
 #include "include/data/person.h"
 
 namespace Ui { class PersonEdit; }
@@ -9,26 +10,29 @@ namespace Ui { class PersonEdit; }
 class PersonEdit : public QWidget
 {
     Q_OBJECT
-    QPointer<Person> initial = nullptr;
     Ui::PersonEdit *ui = nullptr;
+    QMediaDevices devices;
+    Person initial;
+
+protected slots:
+    void UpdatePhotographerControl();
+    void NotifyImageBrowser();
+    void NotifyPhotographer();
+    QImage FindImageFile();
+
 public:
+    explicit PersonEdit(const Person & initial, QWidget *parent = nullptr);
     explicit PersonEdit(QWidget *parent = nullptr);
-    explicit PersonEdit(QPointer<Person> initial, QWidget *parent = nullptr);
-
-    QString GetFirstName() const;
-
-    QString GetLastName() const;
-
-    QDate GetBirthday() const;
+    ~PersonEdit();
 
     Person::Gender GetGender() const;
+    QString GetFirstName() const;
+    QString GetLastName() const;
+    QDate GetBirthday() const;
+    Person GetInitial() const;
+    Person GetPerson() const;
+    QImage GetPhoto() const;
 
-    QPixmap GetPhoto() const;
-
-    QPointer<Person> GetPerson() const;
-
-    const QPointer<Person> GetInitialPerson() const;
-    ~PersonEdit();
 
 public slots:
     void SetFirstName(const QString &value);
@@ -43,20 +47,24 @@ public slots:
     void SetGender(const Person::Gender &value);
     void ResetGender();
 
-    void SetPhoto(const QPixmap &value);
+    void SetPhoto(const QImage &value);
     void ResetPhoto();
 
-    void SetPerson(const QPointer<Person> &value);
+    void SetPerson(const Person &value);
     void ResetPerson();
+
+    void SetInitial(const Person &value);
+
 signals:
     void FirstNameChanged(const QString &value);
     void LastNameChanged(const QString &value);
     void BirthdayChanged(const QDate &value);
+    void InitialChanged(const Person &value);
     void GenderChanged(const Person::Gender &value);
-    void PhotoChanged(const QPixmap &value);
-
+    void PhotoChanged(const QImage &value);
     void FirstNameRejected();
     void LastNameRejected();
+
 };
 
 #endif // PERSONEDIT_H

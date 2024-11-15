@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDate>
-#include <QPixmap>
+#include <QImage>
 #include <QDataStream>
 
 class Person : public QObject
@@ -13,6 +13,7 @@ public:
         Male,
         Female
     };
+    Q_ENUM(Gender)
 
 private:
     Q_OBJECT
@@ -20,7 +21,7 @@ private:
     QString     lastName;
     Gender      gender = Gender::Male;
     QDate       birthday = QDate::currentDate();
-    QPixmap     photo;
+    QImage      photo;
     QDateTime   creation = QDateTime::currentDateTime();
     QDateTime   lastModification = QDateTime::currentDateTime();
 
@@ -28,7 +29,7 @@ private slots:
     void UpdateLastModification();
 
 public:
-    explicit Person(QObject *parent = nullptr);
+    Person(QObject *parent = nullptr);
     Person& operator=(const Person &another);
     Person(const Person &another, QObject *parent = nullptr);
 
@@ -38,14 +39,14 @@ public:
     QString GetLastName() const;
     void SetLastName(const QString &value);
 
-    Gender GetGender() const;
+    Person::Gender GetGender() const;
     void SetGender(const Gender &value);
 
     QDate GetBirthday() const;
     void SetBirthday(const QDate &value);
 
-    QPixmap GetPhoto() const;
-    void SetPhoto(const QPixmap &value);
+    QImage GetPhoto() const;
+    void SetPhoto(const QImage &value);
 
     QDateTime GetLastModification() const;
     QDateTime GetCreation() const;
@@ -61,7 +62,7 @@ signals:
     void LastNameChanged(const QString &value);
     void GenderChanged(const Gender &value);
     void BirthdayChanged(const QDate &value);
-    void PhotoChanged(const QPixmap &value);
+    void PhotoChanged(const QImage &value);
     void LastModificationChanged(const QDateTime &value);
 };
 

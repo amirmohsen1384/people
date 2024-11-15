@@ -15,6 +15,7 @@ class PersonView : public QWidget
     Ui::PersonView *ui = nullptr;
 
 private slots:
+    void SaveImage();
     void UpdatePerson();
 
 private slots:

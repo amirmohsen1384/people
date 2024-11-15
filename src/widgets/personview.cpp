@@ -1,5 +1,33 @@
 #include "include/widgets/personview.h"
 #include "ui_personview.h"
+#include <QFileDialog>
+#include <QImageWriter>
+
+QStringList SupportedImageFilters() {
+    QStringList container = {};
+    container.append("JPEG files (*.jpg *.jpeg)");
+    container.append("PNG files (*.png)");
+    container.append("BMP files (*.bmp)");
+    return container;
+}
+void PersonView::SaveImage() {
+    QFileDialog dialog(this);
+    static QStringList history = {};
+
+    dialog.setNameFilters(SupportedImageFilters());
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setViewMode(QFileDialog::List);
+    dialog.setDirectory(QDir::home());
+    dialog.setHistory(history);
+
+    if(dialog.exec() == QDialog::Accepted) {
+        const QString &filename = dialog.selectedFiles().constFirst();
+        QImageWriter writer(filename);
+        if(writer.write(this->information.GetPhoto())) {
+            history.append(filename);
+        }
+    }
+}
 
 void PersonView::UpdatePerson() {
     UpdateName();
@@ -43,6 +71,7 @@ void PersonView::UpdateLastModification() {
 PersonView::PersonView(QWidget *parent) : QWidget(parent), ui(new Ui::PersonView) {
     ui->setupUi(this);
     connect(this, &PersonView::PersonChanged, this, &PersonView::UpdatePerson);
+    connect(ui->saveButton, &QPushButton::clicked, this, &PersonView::SaveImage);
 }
 
 PersonView::PersonView(const Person &value, QWidget *parent) : PersonView(parent) {

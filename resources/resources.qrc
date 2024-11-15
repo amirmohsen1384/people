@@ -11,5 +11,6 @@
         <file>icons/folder.ico</file>
         <file>icons/gender/man.ico</file>
         <file>icons/gender/woman.ico</file>
+        <file>icons/save.ico</file>
     </qresource>
 </RCC>

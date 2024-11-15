@@ -1,30 +1,28 @@
 #include "include/widgets/personview.h"
 #include "ui_personview.h"
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QImageWriter>
 
-QStringList SupportedImageFilters() {
-    QStringList container = {};
-    container.append("JPEG files (*.jpg *.jpeg)");
-    container.append("PNG files (*.png)");
-    container.append("BMP files (*.bmp)");
-    return container;
-}
 void PersonView::SaveImage() {
     QFileDialog dialog(this);
     static QStringList history = {};
 
-    dialog.setNameFilters(SupportedImageFilters());
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     dialog.setViewMode(QFileDialog::List);
     dialog.setDirectory(QDir::home());
+    dialog.setDefaultSuffix("png");
     dialog.setHistory(history);
 
     if(dialog.exec() == QDialog::Accepted) {
-        const QString &filename = dialog.selectedFiles().constFirst();
-        QImageWriter writer(filename);
-        if(writer.write(this->information.GetPhoto())) {
+        QString filename = dialog.selectedFiles().constFirst();
+        const QImage &image = information.GetPhoto();
+        if(image.save(filename)) {
             history.append(filename);
+
+        } else {
+            QMessageBox::critical(this, "Failed to save photo", "The filename might be invalid, or have a non-suitable suffix or format, or there's no permission to save the file here.");
+
         }
     }
 }

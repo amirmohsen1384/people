@@ -169,12 +169,14 @@ void PersonEdit::NotifyPhotographer() {
 }
 
 // This function is used to return a list of supported filter used in image file dialog
-QStringList SupportedImageFilters() {
-    QStringList container = {};
-    container.append("JPEG files (*.jpg *.jpeg)");
-    container.append("PNG files (*.png)");
-    container.append("BMP files (*.bmp)");
-    return container;
+namespace Open {
+    QStringList SupportedImageFilters() {
+        QStringList container = {};
+        container.append("JPEG files (*.jpg *.jpeg)");
+        container.append("PNG files (*.png)");
+        container.append("BMP files (*.bmp)");
+        return container;
+    }
 }
 
 // This function is used to create a image file dialog and open one
@@ -182,7 +184,7 @@ QImage PersonEdit::FindImageFile() {
     QFileDialog dialog(this);
     static QStringList history = {};
 
-    dialog.setNameFilters(SupportedImageFilters());
+    dialog.setNameFilters(Open::SupportedImageFilters());
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setFileMode(QFileDialog::ExistingFile);
     dialog.setViewMode(QFileDialog::List);
@@ -190,7 +192,7 @@ QImage PersonEdit::FindImageFile() {
     dialog.setHistory(history);
 
     if(dialog.exec() == QDialog::Accepted) {
-        const QString &filename = dialog.selectedFiles().constFirst();
+        QString filename = dialog.selectedFiles().constFirst();
         QImageReader reader(filename);
 
         const QImage &image = reader.read();

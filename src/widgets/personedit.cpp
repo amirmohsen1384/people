@@ -182,7 +182,6 @@ QImage PersonEdit::FindImageFile() {
     QFileDialog dialog(this);
     static QStringList history = {};
 
-    dialog.setWindowTitle("Select a photo to open");
     dialog.setNameFilters(SupportedImageFilters());
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setFileMode(QFileDialog::ExistingFile);
@@ -191,8 +190,15 @@ QImage PersonEdit::FindImageFile() {
     dialog.setHistory(history);
 
     if(dialog.exec() == QDialog::Accepted) {
-        QImageReader reader(dialog.selectedFiles().constFirst());
-        return reader.read();
+        const QString &filename = dialog.selectedFiles().constFirst();
+        QImageReader reader(filename);
+
+        const QImage &image = reader.read();
+        if(!image.isNull()) {
+            history.append(filename);
+        }
+
+        return image;
 
     } else {
         return QImage();

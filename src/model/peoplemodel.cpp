@@ -19,7 +19,7 @@ QVariant PeopleModel::data(const QModelIndex &index, int role) const {
         return person.GetFullName();
     }
     case Qt::UserRole: {
-        return person;
+        return QVariant::fromValue(person);
     }
     default: {
         return QVariant();
@@ -44,6 +44,7 @@ bool PeopleModel::insertRows(int row, int count, const QModelIndex &parent) {
         container.insert(row, Person());
     }
     endInsertRows();
+    return true;
 }
 bool PeopleModel::removeRows(int row, int count, const QModelIndex &parent) {
     if(parent.isValid()) {
@@ -53,6 +54,7 @@ bool PeopleModel::removeRows(int row, int count, const QModelIndex &parent) {
     container.remove(row, count);
     container.squeeze();
     endRemoveRows();
+    return true;
 }
 Qt::ItemFlags PeopleModel::flags(const QModelIndex &index) const {
     if(!index.isValid()) {

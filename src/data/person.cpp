@@ -20,6 +20,8 @@ Person &Person::operator=(const Person &another) {
     this->SetBirthday(another.GetBirthday());
     this->SetGender(another.GetGender());
     this->SetPhoto(another.GetPhoto());
+    this->creation = another.creation;
+    this->lastModification = another.lastModification;
     return *this;
 }
 Person::Person(const Person &another, QObject *parent) : Person(parent) {

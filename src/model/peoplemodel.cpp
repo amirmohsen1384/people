@@ -1,4 +1,9 @@
 #include "include/model/peoplemodel.h"
+#include <QDataStream>
+#include <QSaveFile>
+#include <QIODevice>
+#include <algorithm>
+#include <QFile>
 
 PeopleModel::PeopleModel(const PersonList &value, QObject *parent) : PeopleModel(parent) {
     SetContainer(value);
@@ -10,7 +15,6 @@ int PeopleModel::rowCount(const QModelIndex &parent) const {
     }
     return container.size();
 }
-
 QVariant PeopleModel::data(const QModelIndex &index, int role) const {
     if (!index.isValid()) {
         return QVariant();
@@ -35,7 +39,8 @@ QVariant PeopleModel::data(const QModelIndex &index, int role) const {
     }
 
     case Qt::DecorationRole: {
-        return person.GetPhoto();
+        const QSize &dimensions = QSize(128, 128);
+        return person.GetPhoto().scaled(dimensions, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
     default: {
@@ -51,37 +56,6 @@ bool PeopleModel::setData(const QModelIndex &index, const QVariant &value, int r
     }
     container.replace(index.row(), qvariant_cast<Person>(value));
     emit dataChanged(index, index, {Qt::UserRole});
-    return true;
-}
-
-bool PeopleModel::insertRows(int row, int count, const QModelIndex &parent) {
-    if(parent.isValid() || count <= 0) {
-        return false;
-    }
-
-    const int first = row - 1;
-    row = (row <= 0) ? 1 : row;
-    const int last = (row - 2) + count;
-
-    container.reserve(container.size() + count);
-
-    beginInsertRows(parent, first, last);
-    for(auto i = first; i <= last; ++i) {
-        container.insert(i, Person());
-    }
-    endInsertRows();
-
-    return true;
-}
-
-bool PeopleModel::removeRows(int row, int count, const QModelIndex &parent) {
-    if(parent.isValid() || count <= 0 || row < 0) {
-        return false;
-    }
-    beginRemoveRows(parent, row, row + count - 1);
-    container.remove(row, count);
-    container.squeeze();
-    endRemoveRows();
     return true;
 }
 
@@ -103,34 +77,47 @@ void PeopleModel::SetContainer(const PersonList &value) {
 }
 
 void PeopleModel::Insert(int row, const PersonList &data) {
+    const int first = row;
     PersonListIterator iterator(data);
-    while(iterator.hasNext()) {
-        this->Insert(row, iterator.next());
+    const int last = row + data.size() - 1;
+
+    beginInsertRows(QModelIndex(), first, last);
+    for(int i = first; i <= last; ++i) {
+        container.insert(i, iterator.next());
     }
+    endInsertRows();
 }
 
 void PeopleModel::Insert(int row, const Person &data) {
-    insertRow(row);
-    setData(this->index(row - 1), QVariant::fromValue(data), Qt::UserRole);
+    beginInsertRows(QModelIndex(), row, row);
+    container.insert(row, data);
+    endInsertRows();
 }
 
 void PeopleModel::Append(const Person &data) {
-    Insert(this->rowCount(), data);
+    Insert(container.size(), data);
 }
 
 void PeopleModel::Append(const PersonList &data) {
-    Insert(this->rowCount(), data);
+    Insert(container.size(), data);
 }
 
-void PeopleModel::Remove(const QModelIndexList &indices) {
-    QListIterator<QModelIndex> iterator(indices);
-    while(iterator.hasNext()) {
-        this->Remove(iterator.next());
+
+void PeopleModel::Remove(QModelIndexList &indices) {
+    auto lambda = [&] (QModelIndex &one, QModelIndex &two) {
+        return (one.row() < two.row());
+    };
+    std::sort(indices.begin(), indices.end(), lambda);
+    for(auto iterator = indices.rbegin(); iterator != indices.rend(); ++iterator) {
+        this->Remove(*iterator);
     }
 }
-
-void PeopleModel::Remove(const QModelIndex &index) {
-    removeRow(index.row());
+void PeopleModel::Remove(QModelIndex &index) {
+    const int row = index.row();
+    beginRemoveRows(QModelIndex(), row, row);
+    container.removeAt(row);
+    container.squeeze();
+    endRemoveRows();
 }
 
 void PeopleModel::Clear() {
@@ -140,123 +127,24 @@ void PeopleModel::Clear() {
 }
 
 QList<QModelIndex> PeopleModel::Find(const QString &keyword) const {
-    QList<QModelIndex> indices;
+    QList<QModelIndex> occurrences;
     for(int i = 0; i < this->rowCount(); ++i) {
         const QModelIndex &index = this->index(i);
         const QString &name = this->Obtain(index).GetFullName();
         if(name.contains(keyword, Qt::CaseInsensitive)) {
-            indices.append(index);
+            occurrences.append(index);
         }
     }
-    return indices;
+    return occurrences;
 }
 
 bool PeopleModel::Modify(const QModelIndex &index, const Person &data) {
-    return this->setData(index, data, Qt::UserRole);
+    return this->setData(index, QVariant::fromValue(data), Qt::UserRole);
 }
 
-Person PeopleModel::Obtain(const QModelIndex &index) {
-    return qvariant_cast<Person>(this->data(index, Qt::UserRole));
-}
-
-#include <QFile>
-#include <QIODevice>
-#include <QSaveFile>
-#include <QDataStream>
-
-const quint64 magic = 0x419A202E;
-
-bool PeopleModel::Load(const QString &filename) {
-    QFile file(filename);
-    if(!file.open(QFile::ReadOnly)) {
-        return false;
+Person PeopleModel::Obtain(const QModelIndex &index) const {
+    if(!index.isValid()) {
+        return Person();
     }
-    return this->Load(&file);
-}
-
-bool PeopleModel::Load(const QIODevice *device) {
-    if(!device->isReadable()) {
-        return false;
-    }
-
-    try {
-        QDataStream input(device);
-
-        // Read the magic number from the stream
-        quint64 number = 0;
-        input >> number;
-        if(number != magic) {
-            return false;
-        }
-
-        // Read the count of elements from the stream;
-        quint64 count = 0;
-        input >> count;
-
-        // Read information from the stream
-        PersonList information;
-        information.reserve(count);
-
-        for(quint64 i = 0; i < count; ++i) {
-            Person data;
-            input >> data;
-            information.append(data);
-        }
-
-        this->SetContainer(information);
-        return true;
-
-    } catch(...) {
-        return false;
-
-    }
-}
-
-bool PeopleModel::Save(QIODevice *device, const QModelIndexList &indices) {
-    if(!device->isWritable()) {
-        return false;
-    }
-    try {
-        QDataStream output(device);
-
-        // I write a magic number to check if the given stream is valid when reading.
-        output << magic;
-
-        // Write the count of elements to the stream
-        stream << indices.size();
-
-        // Write the elements to the stream
-        QListIterator<QModelIndex> iterator(indices);
-        while(iterator.hasNext()) {
-            output << Obtain(iterator.next());
-        }
-
-        return true;
-
-    } catch(...) {
-        return false;
-    }
-}
-
-bool PeopleModel::Save(QIODevice *device) {
-    QModelIndexList indices;
-    for(int i = 0; i < rowCount(); ++i) {
-        indices.append(this->index(i));
-    }
-    return this->Save(device, indices);
-}
-bool PeopleModel::Save(const QString &filename, bool appendMode) {
-    QModelIndexList indices;
-    for(int i = 0; i < rowCount(); ++i) {
-        indices.append(this->index(i));
-    }
-    return this->Save(filename, indices, appendMode);
-}
-
-bool PeopleModel::Save(const QString &filename, const QModelIndexList &indices, bool appendMode) {
-    QSaveFile file(filename);
-    if(!file.open(appendMode ? QIODevice::Append : QIODevice::WriteOnly)) {
-        return false;
-    }
-    return this->Save(&file, indices);
+    return container.at(index.row());
 }

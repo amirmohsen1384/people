@@ -52,6 +52,7 @@ public:
     QDateTime GetCreation() const;
 
     QString GetFullName() const;
+    int GetAge() const;
 
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);

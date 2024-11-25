@@ -7,6 +7,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
     main.cpp \
+    src/data/differencedate.cpp \
     src/dialogs/personviewer.cpp \
     src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     include/application.h \
+    include/data/differencedate.h \
     include/model/peoplemodel.h \
     include/camera/camerasettings.h \
     include/dialogs/personeditor.h \

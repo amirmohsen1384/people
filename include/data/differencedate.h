@@ -13,13 +13,14 @@ class DifferenceDate
 
 public:
     DifferenceDate() : year(0), month(0), day(0) {}
-    DifferenceDate(int year, int month, int date);
+    DifferenceDate(int year, int month, int day);
     DifferenceDate(const DifferenceDate &object);
 
     DifferenceDate& operator=(const DifferenceDate &another);
 
     friend QDataStream& operator<<(QDataStream &stream, const DifferenceDate &data);
     friend QDataStream& operator>>(QDataStream &stream, DifferenceDate &data);
+    friend QDebug operator<<(QDebug debugger, const DifferenceDate &date);
 
     int GetDay() const;
     void SetDay(int day);
@@ -45,6 +46,7 @@ Q_DECLARE_METATYPE(DifferenceDate)
 
 QDataStream& operator<<(QDataStream &stream, const DifferenceDate &data);
 QDataStream& operator>>(QDataStream &stream, DifferenceDate &data);
+QDebug operator<<(QDebug debugger, const DifferenceDate &date);
 
 bool operator<(const DifferenceDate &one, const DifferenceDate &two);
 bool operator>(const DifferenceDate &one, const DifferenceDate &two);

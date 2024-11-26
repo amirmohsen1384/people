@@ -1,7 +1,7 @@
 #include "include/data/differencedate.h"
 
 
-DifferenceDate::DifferenceDate(int year, int month, int date) {
+DifferenceDate::DifferenceDate(int year, int month, int day) {
     this->SetDay(day);
     this->SetYear(year);
     this->SetMonth(month);
@@ -18,12 +18,12 @@ DifferenceDate &DifferenceDate::operator=(const DifferenceDate &another) {
     return *this;
 }
 
-QDataStream &DifferenceDate::operator<<(QDataStream &stream, const DifferenceDate &data) {
+QDataStream &operator<<(QDataStream &stream, const DifferenceDate &data) {
     stream << data.year << data.month << data.day;
     return stream;
 }
 
-QDataStream &DifferenceDate::operator>>(QDataStream &stream, DifferenceDate &data) {
+QDataStream &operator>>(QDataStream &stream, DifferenceDate &data) {
     stream >> data.year >> data.month >> data.day;
     return stream;
 }
@@ -79,7 +79,7 @@ DifferenceDate DifferenceDate::GetDifference(const QDate &d1, const QDate &d2) {
 
     result.year = later.year() - earlier.year();
 
-    return later;
+    return result;
 }
 
 DifferenceDate DifferenceDate::GetDifference(const QDate &d1) {
@@ -158,4 +158,10 @@ bool operator==(const DifferenceDate &one, const DifferenceDate &two) {
 
 bool operator!=(const DifferenceDate &one, const DifferenceDate &two) {
     return !(one == two);
+}
+QDebug operator<<(QDebug debugger, const DifferenceDate &date) {
+    debugger << date.year << " year(s), ";
+    debugger << date.month << " month(s), ";
+    debugger << date.day << " day(s)";
+    return debugger;
 }

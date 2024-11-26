@@ -74,20 +74,6 @@ QString Person::GetFullName() const
 {
     return firstName + ' ' + lastName;
 }
-int Person::GetAge() const {
-    int difference = 0;
-    QDate desired = this->GetBirthday();
-    QDate current = QDate::currentDate();
-    if(current.day() < desired.day()) {
-        current.setDate(current.year(), current.month() - 1, current.day());
-    }
-    if(current.month() < desired.month()) {
-        current.setDate(current.year() - 1, current.month(), current.day());
-    }
-    difference = current.year() - desired.year();
-    return difference;
-
-}
 QDateTime Person::GetLastModification() const {
     return this->lastModification;
 

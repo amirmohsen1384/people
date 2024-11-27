@@ -15,6 +15,20 @@ public:
     };
     Q_ENUM(Gender)
 
+    enum Role {
+        LastModificationRole = 0,
+        FirstNameRole,
+        LastNameRole,
+        BirthdayRole,
+        CreationRole,
+        PersonRole,
+        GenderRole,
+        PhotoRole,
+        NameRole,
+        AgeRole
+    };
+    Q_ENUM(Role)
+
 private:
     Q_OBJECT
     QString     firstName;

@@ -1,9 +1,6 @@
+#include "include/data/differencedate.h"
 #include "include/model/peoplemodel.h"
-#include <QDataStream>
-#include <QSaveFile>
-#include <QIODevice>
 #include <algorithm>
-#include <QFile>
 
 PeopleModel::PeopleModel(const PersonList &value, QObject *parent) : PeopleModel(parent) {
     SetContainer(value);
@@ -23,24 +20,73 @@ QVariant PeopleModel::data(const QModelIndex &index, int role) const {
     const Person &person = container.at(index.row());
 
     switch(role) {
-    case Qt::UserRole: {
+    case Qt::UserRole:
+    case Person::PersonRole: {
         return QVariant::fromValue(person);
     }
 
-    case Qt::DisplayRole: {
+    case Qt::DisplayRole:
+    case Person::NameRole: {
         return person.GetFullName();
     }
 
-    case Qt::ToolTipRole: {
-        QString toolTip;
-        toolTip.append("Last Modified: ");
-        toolTip.append(person.GetLastModification().toString());
-        return toolTip;
+    case Person::PhotoRole:
+    case Qt::DecorationRole: {
+        const QSize &size = QSize(96, 96);
+        return person.GetPhoto().scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
-    case Qt::DecorationRole: {
-        const QSize &dimensions = QSize(128, 128);
-        return person.GetPhoto().scaled(dimensions, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    case Qt::ToolTipRole: {
+        QString output = QString("Last Modification: ");
+        quint64 days = person.GetLastModification().daysTo(QDateTime::currentDateTime());
+        if(days < 7) {
+            output.append(QString("%1 day(s) ago").arg(days));
+
+        } else {
+            quint64 weeks = days / 7;
+            if(weeks < 4) {
+                output.append(QString("%1 week(s) ago").arg(weeks));
+
+            } else {
+                quint64 months = weeks / 4;
+                if(months > 3) {
+                    output.append(QString("A long time ago"));
+
+                } else {
+                    output.append(QString("%1 month(s) ago").arg(months));
+
+                }
+            }
+        }
+        return output;
+    }
+
+    case Person::GenderRole: {
+        return QVariant::fromValue(person.GetGender());
+    }
+
+    case Person::AgeRole: {
+        return DifferenceDate::GetDifference(person.GetBirthday()).GetYear();
+    }
+
+    case Person::CreationRole: {
+        return person.GetCreation();
+    }
+
+    case Person::BirthdayRole: {
+        return person.GetBirthday();
+    }
+
+    case Person::FirstNameRole: {
+        return person.GetFirstName();
+    }
+
+    case Person::LastNameRole: {
+        return person.GetLastName();
+    }
+
+    case Person::LastModificationRole: {
+        return person.GetLastModification();
     }
 
     default: {

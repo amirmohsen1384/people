@@ -16,7 +16,7 @@ public:
     Q_ENUM(Gender)
 
     enum Role {
-        LastModificationRole = 0,
+        LastModificationRole = 512,
         FirstNameRole,
         LastNameRole,
         BirthdayRole,

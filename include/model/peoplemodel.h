@@ -8,6 +8,9 @@ class PeopleModel : public QAbstractListModel
 {
     Q_OBJECT
     PersonList container;
+private:
+    static QString ShortenFullName(const QString &value);
+    static QString DisplayLastModification(const QDateTime &value);
 
 public:
     explicit PeopleModel(QObject *parent = nullptr) : QAbstractListModel(parent) {}

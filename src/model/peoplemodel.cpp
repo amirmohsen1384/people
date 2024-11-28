@@ -2,6 +2,42 @@
 #include "include/model/peoplemodel.h"
 #include <algorithm>
 
+QString PeopleModel::ShortenFullName(const QString &value) {
+    const qsizetype length = 24;
+    QString result = value;
+
+    result.truncate(length);
+    if(value.size() > length) {
+        result.append("...");
+    }
+
+    return result;
+}
+QString PeopleModel::DisplayLastModification(const QDateTime &value) {
+    QString output = QString("Last Modification: ");
+    quint64 days = value.daysTo(QDateTime::currentDateTime());
+    if(days < 7) {
+        output.append(QString("%1 day(s) ago").arg(days));
+
+    } else {
+        quint64 weeks = days / 7;
+        if(weeks < 4) {
+            output.append(QString("%1 week(s) ago").arg(weeks));
+
+        } else {
+            quint64 months = weeks / 4;
+            if(months > 3) {
+                output.append(QString("A long time ago"));
+
+            } else {
+                output.append(QString("%1 month(s) ago").arg(months));
+
+            }
+        }
+    }
+    return output;
+}
+
 PeopleModel::PeopleModel(const PersonList &value, QObject *parent) : PeopleModel(parent) {
     SetContainer(value);
 }
@@ -25,40 +61,25 @@ QVariant PeopleModel::data(const QModelIndex &index, int role) const {
         return QVariant::fromValue(person);
     }
 
-    case Qt::DisplayRole:
+    case Qt::DisplayRole: {
+        return PeopleModel::ShortenFullName(person.GetFullName());
+    }
+
     case Person::NameRole: {
         return person.GetFullName();
     }
 
-    case Person::PhotoRole:
+    case Person::PhotoRole: {
+        return person.GetPhoto();
+    }
+
     case Qt::DecorationRole: {
         const QSize &size = QSize(96, 96);
         return person.GetPhoto().scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     }
 
     case Qt::ToolTipRole: {
-        QString output = QString("Last Modification: ");
-        quint64 days = person.GetLastModification().daysTo(QDateTime::currentDateTime());
-        if(days < 7) {
-            output.append(QString("%1 day(s) ago").arg(days));
-
-        } else {
-            quint64 weeks = days / 7;
-            if(weeks < 4) {
-                output.append(QString("%1 week(s) ago").arg(weeks));
-
-            } else {
-                quint64 months = weeks / 4;
-                if(months > 3) {
-                    output.append(QString("A long time ago"));
-
-                } else {
-                    output.append(QString("%1 month(s) ago").arg(months));
-
-                }
-            }
-        }
-        return output;
+        return PeopleModel::DisplayLastModification(person.GetLastModification());
     }
 
     case Person::GenderRole: {

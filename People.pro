@@ -12,6 +12,7 @@ SOURCES += \
     src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
     src/application.cpp \
+    src/model/peopledelegate.cpp \
     src/model/peoplemodel.cpp \
     src/dialogs/personeditor.cpp \
     src/image/imageview.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     include/application.h \
     include/data/differencedate.h \
+    include/model/peopledelegate.h \
     include/model/peoplemodel.h \
     include/camera/camerasettings.h \
     include/dialogs/personeditor.h \

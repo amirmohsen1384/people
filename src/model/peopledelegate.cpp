@@ -125,10 +125,9 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     // Paint the whole item with a relevant color if selected
     if(option.state.testFlag(QStyle::State_Selected)) {
         painter->fillRect(option.rect, QColor(240, 240, 240));
+    }
 
-        // Print a relevant text if selected
-        const QString &help = "Double-click for more information";
-
+    if(option.state.testFlag(QStyle::State_MouseOver)) {
         // Configure the font
 #ifdef Q_OS_WINDOWS
         QFont font = QFont("Segoe UI", 9);
@@ -137,6 +136,9 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         QFont font = QFont("Ubuntu", 9);
 #endif
         font.setUnderline(true);
+
+        // Print a relevant text if selected
+        const QString &help = "Double-click for more information";
 
         // Calculate the position
         QFontMetricsF metrics(font);
@@ -168,7 +170,6 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     QPoint point = option.rect.topLeft();
     painter->translate(point);
 
-    painter->save();
     // Render the photo
     RenderPhoto(painter, index, option.state.testFlag(QStyle::State_Selected));
 
@@ -177,7 +178,5 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
     // Render the person's age
     RenderAge(painter, index);
-    painter->restore();
-
     painter->restore();
 }

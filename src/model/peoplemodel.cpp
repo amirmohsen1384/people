@@ -75,7 +75,7 @@ QVariant PeopleModel::data(const QModelIndex &index, int role) const {
 
     case Qt::DecorationRole: {
         const QSize &size = QSize(96, 96);
-        return person.GetPhoto().scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        return person.GetPhoto().scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     }
 
     case Qt::ToolTipRole: {

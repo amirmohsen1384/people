@@ -12,5 +12,10 @@
         <file>icons/gender/man.ico</file>
         <file>icons/gender/woman.ico</file>
         <file>icons/save.ico</file>
+        <file>icons/add.ico</file>
+        <file>icons/clear.ico</file>
+        <file>icons/delete.ico</file>
+        <file>icons/edit.ico</file>
+        <file>icons/open.ico</file>
     </qresource>
 </RCC>

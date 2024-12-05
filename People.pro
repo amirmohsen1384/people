@@ -16,6 +16,7 @@ SOURCES += \
     src/model/peoplemodel.cpp \
     src/dialogs/personeditor.cpp \
     src/image/imageview.cpp \
+    src/saverequirement.cpp \
     src/widgets/personview.cpp \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     include/camera/camerasettings.h \
     include/dialogs/personeditor.h \
     include/image/imageview.h \
+    include/saverequirement.h \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \

@@ -58,7 +58,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/capture.ico</normaloff>:/icons/capture.ico</iconset>
+         <normaloff>:/icons/camera/capture.ico</normaloff>:/icons/camera/capture.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -90,7 +90,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/settings.ico</normaloff>:/icons/settings.ico</iconset>
+         <normaloff>:/icons/camera/settings.ico</normaloff>:/icons/camera/settings.ico</iconset>
        </property>
        <property name="iconSize">
         <size>

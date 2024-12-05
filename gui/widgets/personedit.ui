@@ -36,7 +36,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/folder.ico</normaloff>:/icons/folder.ico</iconset>
+         <normaloff>:/icons/dialogs/folder.ico</normaloff>:/icons/dialogs/folder.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -59,7 +59,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/camera.ico</normaloff>:/icons/camera.ico</iconset>
+         <normaloff>:/icons/camera/camera.ico</normaloff>:/icons/camera/camera.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -95,7 +95,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/reset.ico</normaloff>:/icons/reset.ico</iconset>
+         <normaloff>:/icons/dialogs/reset.ico</normaloff>:/icons/dialogs/reset.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -151,7 +151,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/reset.ico</normaloff>:/icons/reset.ico</iconset>
+         <normaloff>:/icons/dialogs/reset.ico</normaloff>:/icons/dialogs/reset.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -177,7 +177,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/reset.ico</normaloff>:/icons/reset.ico</iconset>
+         <normaloff>:/icons/dialogs/reset.ico</normaloff>:/icons/dialogs/reset.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -203,7 +203,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/reset.ico</normaloff>:/icons/reset.ico</iconset>
+         <normaloff>:/icons/dialogs/reset.ico</normaloff>:/icons/dialogs/reset.ico</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -262,7 +262,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../resources/resources.qrc">
-         <normaloff>:/icons/reset.ico</normaloff>:/icons/reset.ico</iconset>
+         <normaloff>:/icons/dialogs/reset.ico</normaloff>:/icons/dialogs/reset.ico</iconset>
        </property>
        <property name="iconSize">
         <size>

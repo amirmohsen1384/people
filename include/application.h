@@ -21,11 +21,12 @@ protected slots:
     bool Save(const QString &filename);
 
     void Add();
+    void Open();
     void Save();
     void Clear();
     void SaveAs();
     void Edit(const QModelIndex &index);
-    void Delete(const QModelIndexList &indices);
+    void Delete(QModelIndexList &indices);
 
 public:
     Application(QWidget *parent = nullptr);

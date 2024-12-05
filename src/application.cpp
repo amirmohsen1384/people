@@ -1,17 +1,36 @@
 #include "include/dialogs/personeditor.h"
 #include "include/application.h"
 #include "ui_application.h"
+#include <QMessageBox>
 #include <QFileDialog>
 #include <QFile>
 
 Application::Application(QWidget *parent) : QMainWindow(parent), ui(new Ui::Application) {
     ui->setupUi(this);
+    connect(ui->AboutQtAction, &QAction::triggered, this, [&]() { QApplication::aboutQt(); });
 }
 
 void Application::Add() {
     PersonEditor editor(this);
     if(editor.exec() == QDialog::Accepted) {
         model.Append(editor.GetPerson());
+    }
+}
+
+void Application::Open() {
+    static QStringList history = {};
+    QFileDialog dialog(this);
+    dialog.setHistory(history);
+    dialog.setDefaultSuffix(".pf");
+    dialog.setDirectory(QDir::home());
+    dialog.setNameFilter("People files (*.pf)");
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    if(dialog.exec() == QDialog::Accepted) {
+        const QString &filename = dialog.selectedFiles().constFirst();
+        if(this->Save(filename) == true) {
+            history.append(filename);
+        }
     }
 }
 
@@ -36,7 +55,6 @@ void Application::SaveAs() {
     dialog.setDirectory(QDir::home());
     dialog.setNameFilter("People files (*.pf)");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
-    dialog.setFileMode(QFileDialog::ExistingFile);
     if(dialog.exec() == QDialog::Accepted) {
         const QString &filename = dialog.selectedFiles().constFirst();
         if(this->Save(filename) == true) {
@@ -57,7 +75,7 @@ void Application::Edit(const QModelIndex &index) {
     }
 }
 
-void Application::Delete(const QModelIndexList &indices) {
+void Application::Delete(QModelIndexList &indices) {
     model.Remove(indices);
 }
 

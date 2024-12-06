@@ -7,16 +7,18 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
     main.cpp \
+    src/app/core.cpp \
+    src/app/edit.cpp \
+    src/app/file.cpp \
     src/data/differencedate.cpp \
     src/dialogs/personviewer.cpp \
     src/camera/camerasettings.cpp \
     src/camera/photographer.cpp \
-    src/application.cpp \
     src/model/peopledelegate.cpp \
     src/model/peoplemodel.cpp \
     src/dialogs/personeditor.cpp \
     src/image/imageview.cpp \
-    src/saverequirement.cpp \
+    src/saverequest.cpp \
     src/widgets/personview.cpp \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
@@ -32,7 +34,7 @@ HEADERS += \
     include/camera/camerasettings.h \
     include/dialogs/personeditor.h \
     include/image/imageview.h \
-    include/saverequirement.h \
+    include/saverequest.h \
     include/widgets/personedit.h \
     include/data/firstnamevalidator.h \
     include/data/lastnamevalidator.h \

@@ -2,6 +2,7 @@
 #define APPLICATION_H
 
 #include <QMainWindow>
+#include "include/saverequest.h"
 #include "include/model/peoplemodel.h"
 
 QT_BEGIN_NAMESPACE
@@ -13,20 +14,27 @@ QT_END_NAMESPACE
 class Application : public QMainWindow
 {
     Q_OBJECT
+    SaveRequest save;
     PeopleModel model;
     Ui::Application *ui;
 
-protected slots:
+protected:
     bool Load(const QString &filename);
     bool Save(const QString &filename);
-
-    void Add();
-    void Open();
-    void Save();
-    void Clear();
-    void SaveAs();
     void Edit(const QModelIndex &index);
     void Delete(QModelIndexList &indices);
+
+protected slots:
+    void New();
+    void Add();
+    void Open();
+    bool Save();
+    void Edit();
+    void Close();
+    void Clear();
+    void About();
+    void Delete();
+    bool SaveAs();
 
 public:
     Application(QWidget *parent = nullptr);

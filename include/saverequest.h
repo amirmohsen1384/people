@@ -1,24 +1,33 @@
-#ifndef SAVEREQUIREMENT_H
-#define SAVEREQUIREMENT_H
+#ifndef SAVEREQUEST_H
+#define SAVEREQUEST_H
 
 #include <QObject>
 #include <QMessageBox>
 
-class SaveRequirement : public QObject
+class SaveRequest : public QObject
 {
     Q_OBJECT
     bool required;
 
 public:
-    explicit SaveRequirement(bool initial = false, QObject *parent = nullptr);
+    enum Result {
+        Unknown = 0x00,
+        Rejected = 0x02,
+        SaveFirst = 0x01,
+        NotRequired = 0x04,
+        DiscardFirst = 0x08
+    };
+    Q_ENUM(Result)
+
+    explicit SaveRequest(bool initial = false, QObject *parent = nullptr);
     bool IsRequired() const;
 
 public slots:
     void SetRequired(bool state);
-    QMessageBox::ButtonRole Notify(QWidget *parent);
+    SaveRequest::Result Request(QWidget *parent = nullptr);
 
 signals:
-    void StateChanged(bool requirement);
+    void StateChanged(bool required);
 };
 
-#endif // SAVEREQUIREMENT_H
+#endif // SAVEREQUEST_H

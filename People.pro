@@ -23,10 +23,12 @@ SOURCES += \
     src/widgets/personedit.cpp \
     src/data/firstnamevalidator.cpp \
     src/data/lastnamevalidator.cpp \
+    src/dialogs/aboutdialog.cpp \
     src/data/person.cpp
 
 
 HEADERS += \
+    include/dialogs/aboutdialog.h \
     include/application.h \
     include/data/differencedate.h \
     include/model/peopledelegate.h \
@@ -44,6 +46,7 @@ HEADERS += \
     include/dialogs/personviewer.h
 
 FORMS += \
+    gui/dialogs/aboutdialog.ui \
     gui/application.ui \
     gui/camera/camerasettings.ui \
     gui/dialogs/personeditor.ui \
@@ -52,7 +55,6 @@ FORMS += \
     gui/camera/photographer.ui \
     gui/dialogs/personviewer.ui
 
-# Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target

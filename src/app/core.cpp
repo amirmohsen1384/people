@@ -1,4 +1,5 @@
 #include "include/model/peopledelegate.h"
+#include "include/dialogs/aboutdialog.h"
 #include "include/application.h"
 #include "ui_application.h"
 
@@ -24,14 +25,7 @@ Application::~Application()
     delete ui;
 }
 
-#include <QMessageBox>
 void Application::About() {
-    QMessageBox about(this);
-    about.setWindowTitle("People");
-    about.setIconPixmap(QPixmap(":/icons/main.ico"));
-    about.setText("<b>People v1.0 beta<\b>");
-    about.setInformativeText("People is a cross-platform application which saves some of the basic people's information.\n\n"
-                             "You can work with the information, add or remove some, or save to a file or load from.\n\n"
-                             "This software is open-source and licensed under GPL v3.0.");
-    about.exec();
+    AboutDialog dialog(this);
+    dialog.exec();
 }

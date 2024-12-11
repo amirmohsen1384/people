@@ -82,6 +82,9 @@
    </property>
   </action>
   <action name="saveAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/icons/file/save.ico</normaloff>:/icons/file/save.ico</iconset>
@@ -100,6 +103,9 @@
    </property>
   </action>
   <action name="saveAsAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/icons/file/save as.ico</normaloff>:/icons/file/save as.ico</iconset>
@@ -118,6 +124,9 @@
    </property>
   </action>
   <action name="deleteAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/icons/edit/delete.ico</normaloff>:/icons/edit/delete.ico</iconset>
@@ -154,6 +163,9 @@
    </property>
   </action>
   <action name="editAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/icons/edit/edit.ico</normaloff>:/icons/edit/edit.ico</iconset>
@@ -172,6 +184,9 @@
    </property>
   </action>
   <action name="clearAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/icons/edit/clear.ico</normaloff>:/icons/edit/clear.ico</iconset>

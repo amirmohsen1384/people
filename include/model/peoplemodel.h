@@ -42,6 +42,9 @@ public slots:
     void Clear();
 
     bool Modify(const QModelIndex &index, const Person &data);
+
+signals:
+    void ItemCountChanged(int count);
 };
 
 #endif // PEOPLEMODEL_H

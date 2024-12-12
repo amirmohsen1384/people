@@ -141,6 +141,7 @@ void PeopleModel::SetContainer(const PersonList &value) {
     beginResetModel();
     container = value;
     endResetModel();
+    emit ItemCountChanged(this->rowCount());
 }
 
 void PeopleModel::Insert(int row, const PersonList &data) {
@@ -153,12 +154,14 @@ void PeopleModel::Insert(int row, const PersonList &data) {
         container.insert(i, iterator.next());
     }
     endInsertRows();
+    emit ItemCountChanged(this->rowCount());
 }
 
 void PeopleModel::Insert(int row, const Person &data) {
     beginInsertRows(QModelIndex(), row, row);
     container.insert(row, data);
     endInsertRows();
+    emit ItemCountChanged(this->rowCount());
 }
 
 void PeopleModel::Append(const Person &data) {
@@ -185,12 +188,14 @@ void PeopleModel::Remove(QModelIndex &index) {
     container.removeAt(row);
     container.squeeze();
     endRemoveRows();
+    emit ItemCountChanged(this->rowCount());
 }
 
 void PeopleModel::Clear() {
     beginResetModel();
     container.clear();
     endResetModel();
+    emit ItemCountChanged(this->rowCount());
 }
 
 QList<QModelIndex> PeopleModel::Find(const QString &keyword) const {

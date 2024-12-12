@@ -23,5 +23,6 @@
         <file>icons/help/about.ico</file>
         <file>icons/help/qt.ico</file>
         <file>icons/file/close.ico</file>
+        <file>icons/edit/view.ico</file>
     </qresource>
 </RCC>

@@ -17,6 +17,9 @@ class Application : public QMainWindow
     SaveRequest save;
     PeopleModel model;
     Ui::Application *ui;
+private slots:
+    void ConnectList();
+    void ConnectActions();
 
 protected:
     bool Load(const QString &filename);

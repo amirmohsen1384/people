@@ -10,6 +10,7 @@ SOURCES += \
     src/app/core.cpp \
     src/app/edit.cpp \
     src/app/file.cpp \
+    src/app/interaction.cpp \
     src/data/differencedate.cpp \
     src/dialogs/personviewer.cpp \
     src/camera/camerasettings.cpp \

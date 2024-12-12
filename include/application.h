@@ -22,6 +22,7 @@ protected:
     bool Load(const QString &filename);
     bool Save(const QString &filename);
     void Edit(const QModelIndex &index);
+    void View(const QModelIndex &index);
     void Delete(QModelIndexList &indices);
 
 protected slots:

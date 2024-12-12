@@ -20,7 +20,14 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QListView" name="container"/>
+     <widget class="QListView" name="container">
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -51,6 +58,7 @@
     <addaction name="editAction"/>
     <addaction name="deleteAction"/>
     <addaction name="clearAction"/>
+    <addaction name="viewAction"/>
    </widget>
    <widget class="QMenu" name="helpMenu">
     <property name="title">
@@ -198,7 +206,7 @@
     <string>Deletes all of the items in the table</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Del</string>
+    <string>Alt+Del</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::ApplicationSpecificRole</enum>
@@ -262,6 +270,27 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::AboutQtRole</enum>
+   </property>
+  </action>
+  <action name="viewAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/icons/edit/view.ico</normaloff>:/icons/edit/view.ico</iconset>
+   </property>
+   <property name="text">
+    <string>View</string>
+   </property>
+   <property name="toolTip">
+    <string>View the person's information</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+V</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::ApplicationSpecificRole</enum>
    </property>
   </action>
  </widget>

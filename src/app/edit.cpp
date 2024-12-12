@@ -1,4 +1,5 @@
 #include "include/dialogs/personeditor.h"
+#include "include/dialogs/personviewer.h"
 #include "include/application.h"
 #include "ui_application.h"
 
@@ -31,6 +32,14 @@ void Application::Edit(const QModelIndex &index) {
         model.Modify(index, editor.GetPerson());
         save.SetRequired(true);
     }
+}
+
+void Application::View(const QModelIndex &index) {
+    if(!index.isValid()) {
+        return;
+    }
+    PersonViewer viewer(model.Obtain(index), this);
+    viewer.exec();
 }
 void Application::Delete(QModelIndexList &indices) {
     if(!indices.isEmpty()) {

@@ -13,8 +13,10 @@ void Application::New() {
     case SaveRequest::Rejected: {
         return;
     }
+    default: {}
     }
     model.Clear();
+    save.SetRequired(false);
 }
 
 void Application::Close() {

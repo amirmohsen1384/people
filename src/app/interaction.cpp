@@ -12,6 +12,7 @@ void Application::ConnectActions() {
     connect(ui->editAction, &QAction::triggered, this, QOverload<>::of(&Application::Edit));
     connect(ui->deleteAction, &QAction::triggered, this, QOverload<>::of(&Application::Delete));
     connect(ui->clearAction, &QAction::triggered, this, &Application::Clear);
+    connect(ui->viewAction, &QAction::triggered, this, QOverload<>::of(&Application::View));
 
     connect(ui->aboutAction, &QAction::triggered, this, &Application::About);
     connect(ui->AboutQtAction, &QAction::triggered, this, [&]() { QApplication::aboutQt(); });
@@ -34,4 +35,5 @@ void Application::ConnectList() {
         ui->editAction->setEnabled(indices.size() == 1);
         ui->viewAction->setEnabled(indices.size() == 1);
     });
+    connect(ui->container, &QListView::activated, this, QOverload<const QModelIndex &>::of(&Application::View));
 }

@@ -34,6 +34,7 @@ protected slots:
     void Open();
     bool Save();
     void Edit();
+    void View();
     void Close();
     void Clear();
     void About();

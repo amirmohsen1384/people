@@ -54,3 +54,8 @@ void Application::Delete() {
 void Application::Edit() {
     this->Edit(ui->container->currentIndex());
 }
+
+void Application::View() {
+    const QModelIndex &index = ui->container->currentIndex();
+    this->View(index);
+}

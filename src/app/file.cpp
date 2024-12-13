@@ -54,16 +54,18 @@ void Application::Open() {
         }
         case SaveRequest::DiscardFirst: {
             model.Clear();
+            break;
         }
-        default: {
+        case SaveRequest::Rejected: {
             return;
         }
+        default: {
+            // Load information from the file
+            const QString filename = dialog.selectedFiles().constFirst();
+            if(this->Load(filename)) {
+                history.append(filename);
+            }
         }
-
-        // Load information from the file
-        const QString filename = dialog.selectedFiles().constFirst();
-        if(this->Load(filename)) {
-            history.append(filename);
         }
     }
 }

@@ -54,7 +54,6 @@ void DifferenceDate::SetMonth(int month) {
 
 DifferenceDate DifferenceDate::GetDifference(const QDate &d1, const QDate &d2) {
     QDate earlier, later;
-
     if(d1 < d2) {
         earlier = d1;
         later = d2;
@@ -66,17 +65,17 @@ DifferenceDate DifferenceDate::GetDifference(const QDate &d1, const QDate &d2) {
     }
 
     DifferenceDate result;
-
     if(later.day() < earlier.day()) {
-        later.setDate(later.year(), later.month() - 1, later.day() + later.daysInMonth());
+        result.day = later.day() + later.daysInMonth();
+        result.month = later.month() - 1;
     }
-    result.day = later.day() - earlier.day();
+    result.day -= earlier.day();
 
-    if(later.month() < earlier.month()) {
-        later.setDate(later.year() - 1, later.month() + 12, later.day());
+    if(result.month < earlier.month()) {
+        result.month = later.month() + 12;
+        result.year = later.year() - 1;
     }
-    result.month = later.month() - earlier.month();
-
+    result.month -= earlier.month();
     result.year = later.year() - earlier.year();
 
     return result;

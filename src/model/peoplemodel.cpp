@@ -16,7 +16,21 @@ QString PeopleModel::ShortenFullName(const QString &value) {
 QString PeopleModel::DisplayLastModification(const QDateTime &value) {
     QString output = QString("Last Modification: ");
     quint64 days = value.daysTo(QDateTime::currentDateTime());
-    if(days < 7) {
+    if(days == 0) {
+        quint64 seconds = value.time().secsTo(QTime::currentTime());
+        quint64 hour = seconds / 3600, minute = (seconds % 3600) / 60;
+        if(hour == 0) {
+            if(minute == 0) {
+                output.append("Recently");
+
+            } else {
+                output.append(QString("%1 minute(s) ago").arg(minute));
+            }
+        } else {
+            output.append(QString("%1 hour(s) ago").arg(hour));
+        }
+
+    } else if(days < 7) {
         output.append(QString("%1 day(s) ago").arg(days));
 
     } else {

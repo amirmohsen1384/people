@@ -125,9 +125,7 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     // Paint the whole item with a relevant color if selected
     if(option.state.testFlag(QStyle::State_Selected)) {
         painter->fillRect(option.rect, QColor(240, 240, 240));
-    }
 
-    if(option.state.testFlag(QStyle::State_MouseOver)) {
         // Configure the font
 #ifdef Q_OS_WINDOWS
         QFont font = QFont("Segoe UI", 9);
@@ -135,6 +133,7 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 #ifdef Q_OS_LINUX
         QFont font = QFont("Ubuntu", 9);
 #endif
+
         font.setUnderline(true);
 
         // Print a relevant text if selected

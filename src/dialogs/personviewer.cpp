@@ -5,22 +5,16 @@ PersonViewer::PersonViewer(const Person &person, QWidget *parent) : PersonViewer
     this->SetPerson(person);
 }
 
-PersonViewer::PersonViewer(QWidget *parent) : QDialog(parent), ui(new Ui::PersonViewer) {
+PersonViewer::PersonViewer(QWidget *parent) : AbstractInterface(parent), ui(new Ui::PersonViewer) {
     ui->setupUi(this);
-
-    this->setFixedSize(size);
-    connect(ui->editButton, &QPushButton::clicked, this, &PersonViewer::RequestToEdit);
-
-    connect(this, &PersonViewer::PersonChanged, this, &PersonViewer::UpdateTitle);
+    UpdateWindow();
     UpdateTitle();
+    connect(this, &PersonViewer::PersonChanged, this, &PersonViewer::UpdateTitle);
+    connect(ui->editButton, &QPushButton::clicked, this, &PersonViewer::RequestToEdit);
 }
 
 PersonViewer::~PersonViewer() {
     delete ui;
-}
-
-QSize PersonViewer::sizeHint() const {
-    return size;
 }
 
 void PersonViewer::UpdateTitle() {

@@ -1,32 +1,27 @@
 #ifndef PERSONVIEWER_H
 #define PERSONVIEWER_H
 
-#include <QDialog>
+#include "include/dialogs/abstractinterface.h"
 #include "include/data/person.h"
 
 namespace Ui {
 class PersonViewer;
 }
 
-class PersonViewer : public QDialog
+class PersonViewer : public AbstractInterface
 {
     Q_OBJECT
-    const QSize size = QSize(900, 900);
     Ui::PersonViewer *ui = nullptr;
 
-protected:
-    virtual QSize sizeHint() const;
-
 protected slots:
-    void UpdateTitle();
     void RequestToEdit();
+    virtual void UpdateTitle() override;
 
 public:
     explicit PersonViewer(const Person &person, QWidget *parent = nullptr);
     explicit PersonViewer(QWidget *parent = nullptr);
+    virtual Person GetPerson() const override;
     ~PersonViewer();
-
-    Person GetPerson() const;
 
 public slots:
     void SetPerson(const Person &person);

@@ -1,10 +1,9 @@
 #include "include/dialogs/personeditor.h"
 #include "ui_personeditor.h"
-
-PersonEditor::PersonEditor(QWidget *parent) : QDialog(parent), ui(new Ui::PersonEditor) {
+#include <QScreen>
+PersonEditor::PersonEditor(QWidget *parent) : AbstractInterface(parent), ui(new Ui::PersonEditor) {
     ui->setupUi(this);
-    setFixedSize(size);
-
+    UpdateWindow();
     UpdateTitle();
     connect(ui->mainForm, &PersonEdit::InitialChanged, this, &PersonEditor::UpdateTitle);
     connect(ui->controlBox, &QDialogButtonBox::clicked, this, [&](QAbstractButton *button) {
@@ -18,10 +17,6 @@ PersonEditor::PersonEditor(const Person &info, QWidget *parent)  : PersonEditor(
 }
 PersonEditor::~PersonEditor() {
     delete ui;
-}
-
-QSize PersonEditor::sizeHint() const {
-    return size;
 }
 
 void PersonEditor::UpdateTitle() {

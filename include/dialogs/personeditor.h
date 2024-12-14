@@ -1,29 +1,25 @@
 #ifndef PERSONEDITOR_H
 #define PERSONEDITOR_H
 
-#include <QDialog>
+#include "include/dialogs/abstractinterface.h"
 #include "include/data/person.h"
 
 namespace Ui {
 class PersonEditor;
 }
 
-class PersonEditor : public QDialog
+class PersonEditor : public AbstractInterface
 {
-    const QSize size = QSize(900, 900);
-    Ui::PersonEditor *ui = nullptr;
     Q_OBJECT
-
-protected:
-    virtual QSize sizeHint() const;
+    Ui::PersonEditor *ui = nullptr;
 
 protected slots:
-    void UpdateTitle();
+    virtual void UpdateTitle() override;
 
 public:
     explicit PersonEditor(const Person &info, QWidget *parent = nullptr);
     explicit PersonEditor(QWidget *parent = nullptr);
-    Person GetPerson() const;
+    virtual Person GetPerson() const override;
     ~PersonEditor();
 
 public slots:

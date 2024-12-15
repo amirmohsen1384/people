@@ -6,6 +6,8 @@
 #include <QImage>
 #include <QDataStream>
 
+class PersonEdit;
+
 class Person : public QObject
 {
 public:
@@ -70,6 +72,7 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);
     friend QDebug operator<<(QDebug debugger, const Person &data);
+    friend class PersonEdit;
 
 signals:
     void FirstNameChanged(const QString &value);

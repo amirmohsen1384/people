@@ -115,19 +115,21 @@ Person PersonEdit::GetInitial() const {
     return initial;
 }
 void PersonEdit::SetPerson(const Person &value) {
-    this->SetFirstName(value.GetFirstName());
-    this->SetLastName(value.GetLastName());
-    this->SetBirthday(value.GetBirthday());
-    this->SetGender(value.GetGender());
-    this->SetPhoto(value.GetPhoto());
+    this->SetFirstName(value.firstName);
+    this->SetLastName(value.lastName);
+    this->SetBirthday(value.birthday);
+    this->SetGender(value.gender);
+    this->SetPhoto(value.photo);
 }
 Person PersonEdit::GetPerson() const {
     Person person;
-    person.SetFirstName(this->GetFirstName());
-    person.SetLastName(this->GetLastName());
-    person.SetBirthday(this->GetBirthday());
-    person.SetGender(this->GetGender());
-    person.SetPhoto(this->GetPhoto());
+    person.creation = initial.creation;
+    person.firstName = ui->firstNameEdit->text();
+    person.lastName = ui->lastNameEdit->text();
+    person.birthday = ui->birthdayEdit->date();
+    person.gender = this->GetGender();
+    person.photo = this->GetPhoto();
+    person.lastModification = QDateTime::currentDateTime();
     return person;
 }
 void PersonEdit::ResetPerson() {

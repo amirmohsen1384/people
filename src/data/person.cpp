@@ -15,13 +15,20 @@ Person::Person(QObject *parent) : QObject(parent) {
 }
 
 Person &Person::operator=(const Person &another) {
+    // Store creation and last modification
+    QDateTime created = another.GetCreation();
+    QDateTime modified = another.GetLastModification();
+
+    // Move data from the source object
     this->SetFirstName(another.GetFirstName());
     this->SetLastName(another.GetLastName());
     this->SetBirthday(another.GetBirthday());
     this->SetGender(another.GetGender());
     this->SetPhoto(another.GetPhoto());
-    this->creation = another.creation;
-    this->lastModification = another.lastModification;
+
+    // Update the creation and last modification
+    this->lastModification = modified;
+    this->creation = created;
     return *this;
 }
 Person::Person(const Person &another, QObject *parent) : Person(parent) {

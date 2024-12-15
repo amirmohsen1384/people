@@ -39,6 +39,14 @@ void Application::View(const QModelIndex &index) {
         return;
     }
     PersonViewer viewer(model.Obtain(index), this);
+    connect(&viewer, &PersonViewer::EditRequested, this, [&]() {
+        PersonEditor editor(model.Obtain(index), &viewer);
+        if(editor.exec() == QDialog::Accepted) {
+            model.Modify(index, editor.GetPerson());
+            viewer.SetPerson(model.Obtain(index));
+            save.SetRequired(true);
+        }
+    });
     viewer.exec();
 }
 void Application::Delete(QModelIndexList &indices) {

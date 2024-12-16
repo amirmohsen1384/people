@@ -5,6 +5,7 @@
 
 Application::Application(QWidget *parent) : QMainWindow(parent), ui(new Ui::Application) {
     ui->setupUi(this);
+    this->showMaximized();
     ui->container->setModel(&model);
     ui->container->setItemDelegate(new PeopleDelegate);
     ConnectActions();

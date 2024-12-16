@@ -6,6 +6,9 @@
 
 void Application::New() {
     switch(save.Request()) {
+    case SaveRequest::DiscardFirst: {
+        break;
+    }
     case SaveRequest::SaveFirst: {
         this->Save();
         break;
@@ -13,7 +16,6 @@ void Application::New() {
     case SaveRequest::Rejected: {
         return;
     }
-    default: {}
     }
     model.Clear();
     save.SetRequired(false);
@@ -21,6 +23,9 @@ void Application::New() {
 
 void Application::Close() {
     switch(save.Request()) {
+    case SaveRequest::DiscardFirst: {
+        break;
+    }
     case SaveRequest::SaveFirst: {
         this->Save();
         break;
@@ -47,27 +52,24 @@ void Application::Open() {
 
     // Execute the dialog
     if(dialog.exec() == QDialog::Accepted) {
-
         // Save the model if needed
         switch(save.Request(this)) {
-        case SaveRequest::SaveFirst: {
-            this->Save();
-            break;
-        }
         case SaveRequest::DiscardFirst: {
             model.Clear();
+            break;
+        }
+        case SaveRequest::SaveFirst: {
+            this->Save();
             break;
         }
         case SaveRequest::Rejected: {
             return;
         }
-        default: {
-            // Load information from the file
-            const QString filename = dialog.selectedFiles().constFirst();
-            if(this->Load(filename)) {
-                history.append(filename);
-            }
         }
+        // Load information from the file
+        const QString filename = dialog.selectedFiles().constFirst();
+        if(this->Load(filename)) {
+            history.append(filename);
         }
     }
 }

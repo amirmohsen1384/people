@@ -17,9 +17,9 @@ SaveRequest::Result SaveRequest::Request(QWidget *parent) {
         return Result::NotRequired;
     }
     QMessageBox dialog(parent);
-    dialog.setWindowTitle("Save Changes");
+    dialog.setWindowTitle("Confirm");
     dialog.setIcon(QMessageBox::Information);
-    dialog.setInformativeText("Do you want to save changes to a file?");
+    dialog.setText("Do you want to save changes to a file?");
     dialog.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     switch(dialog.exec()) {
     case QMessageBox::Save: {

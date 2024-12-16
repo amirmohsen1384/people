@@ -11,16 +11,8 @@ void Application::Add() {
     }
 }
 void Application::Clear() {
-    switch(save.Request()) {
-    case SaveRequest::SaveFirst: {
-        this->Save();
-        break;
-    }
-    case SaveRequest::Rejected: {
-        return;
-    }
-    }
     model.Clear();
+    save.SetRequired(true);
 }
 
 void Application::Edit(const QModelIndex &index) {

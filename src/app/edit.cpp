@@ -57,7 +57,15 @@ void Application::Delete(QModelIndexList &indices) {
 }
 void Application::Delete() {
     QModelIndexList indices = ui->container->selectionModel()->selectedIndexes();
-    this->Delete(indices);
+    QMessageBox message(this);
+    message.setWindowTitle("Caution");
+    message.setIcon(QMessageBox::Warning);
+    message.setInformativeText("This operation is permanent and cannot be restored.");
+    message.setText(QString("Are you sure to delete %1 item(s) from the list?").arg(indices.size()));
+    message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    if(message.exec() == QMessageBox::Yes) {
+        this->Delete(indices);
+    }
 }
 void Application::Edit() {
     this->Edit(ui->container->currentIndex());

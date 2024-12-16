@@ -9,13 +9,13 @@ class PeopleDelegate : public QStyledItemDelegate
     const QMarginsF margins = QMarginsF(10, 10, 10, 10);
 
 protected:
-    virtual void RenderPhoto(QPainter *painter, const QModelIndex &index, bool selected = false) const;
-    virtual void RenderName(QPainter *painter, const QModelIndex &index) const;
-    virtual void RenderAge(QPainter *painter, const QModelIndex &index) const;
+    virtual void RenderPhoto(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool selected = false) const;
+    virtual void RenderName(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual void RenderAge(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 public:
     PeopleDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
-    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 

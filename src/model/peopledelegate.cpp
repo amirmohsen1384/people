@@ -4,7 +4,9 @@
 #include <QMarginsF>
 #include <QPainter>
 
-void PeopleDelegate::RenderPhoto(QPainter *painter, const QModelIndex &index, bool selected) const {
+void PeopleDelegate::RenderPhoto(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index, bool selected) const {
+    Q_UNUSED(option)
+
     // Obtain information from the model index
     const QImage image = qvariant_cast<QImage>(index.data(Qt::DecorationRole));
 
@@ -51,7 +53,7 @@ void PeopleDelegate::RenderPhoto(QPainter *painter, const QModelIndex &index, bo
     painter->translate(QPoint(image.rect().width() + margins.right(), 0));
 }
 
-void PeopleDelegate::RenderName(QPainter *painter, const QModelIndex &index) const {
+void PeopleDelegate::RenderName(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
 // Construct the font which will be used when rendering the name
 #ifdef Q_OS_WIN
     const QFont &font = QFont("Segoe UI Light", 18);
@@ -74,6 +76,7 @@ void PeopleDelegate::RenderName(QPainter *painter, const QModelIndex &index) con
 
     // Render the name onto the view
     painter->setFont(font);
+    painter->setPen(QPen(option.palette.text(), 18));
     painter->drawText(QPoint(0, rectangle.height()), name);
 
     // Reset the font
@@ -83,7 +86,9 @@ void PeopleDelegate::RenderName(QPainter *painter, const QModelIndex &index) con
     painter->translate(QPoint(0, rectangle.height() + margins.bottom()));
 }
 
-void PeopleDelegate::RenderAge(QPainter *painter, const QModelIndex &index) const {
+void PeopleDelegate::RenderAge(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+    Q_UNUSED(option)
+
 // Construct the font which will be used when rendering the age
 #ifdef Q_OS_WIN
     const QFont &font = QFont("Segoe UI Light", 10);
@@ -113,7 +118,7 @@ void PeopleDelegate::RenderAge(QPainter *painter, const QModelIndex &index) cons
 }
 
 QSize PeopleDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-    Q_UNUSED(index)
+    Q_UNUSED(option)
     QSize result = QSize();
     QSize imageSize = qvariant_cast<QImage>(index.data(Qt::DecorationRole)).size();
     result.setHeight(imageSize.height() + margins.top() + margins.bottom());
@@ -124,7 +129,7 @@ QSize PeopleDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const {
     // Paint the whole item with a relevant color if selected
     if(option.state.testFlag(QStyle::State_Selected)) {
-        painter->fillRect(option.rect, QColor(240, 240, 240));
+        painter->fillRect(option.rect, option.palette.highlight());
 
         // Configure the font
 #ifdef Q_OS_WINDOWS
@@ -133,7 +138,6 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 #ifdef Q_OS_LINUX
         QFont font = QFont("Ubuntu", 9);
 #endif
-
         font.setUnderline(true);
 
         // Print a relevant text if selected
@@ -152,7 +156,8 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
         QPen initialPen = painter->pen();
 
         painter->setFont(font);
-        painter->setPen(QPen(Qt::darkBlue));
+        painter->setPen(QPen(option.palette.highlightedText(), 9));
+
         painter->drawText(position, help);
 
         painter->setFont(initialFont);
@@ -170,12 +175,12 @@ void PeopleDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     painter->translate(point);
 
     // Render the photo
-    RenderPhoto(painter, index, option.state.testFlag(QStyle::State_Selected));
+    RenderPhoto(painter, option, index, option.state.testFlag(QStyle::State_Selected));
 
     // Render the person's name
-    RenderName(painter, index);
+    RenderName(painter, option, index);
 
     // Render the person's age
-    RenderAge(painter, index);
+    RenderAge(painter, option, index);
     painter->restore();
 }

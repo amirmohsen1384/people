@@ -27,6 +27,7 @@ protected:
     void Edit(const QModelIndex &index);
     void View(const QModelIndex &index);
     void Delete(QModelIndexList &indices);
+    void closeEvent(QCloseEvent *event) override;
 
 protected slots:
     void New();

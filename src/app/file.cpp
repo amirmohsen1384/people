@@ -167,3 +167,22 @@ bool Application::Save(const QString &filename) {
 
     return true;
 }
+
+#include <QCloseEvent>
+void Application::closeEvent(QCloseEvent *event) {
+    switch(save.Request()) {
+    case SaveRequest::SaveFirst: {
+        this->Save();
+        event->accept();
+        break;
+    }
+    case SaveRequest::DiscardFirst: {
+        event->accept();
+        break;
+    }
+    case SaveRequest::Rejected: {
+        event->ignore();
+        return;
+    }
+    }
+}

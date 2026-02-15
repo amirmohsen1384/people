@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>/resources/images/default.png</file>
+        <file>/resources/icons/gender/man.ico</file>
+        <file>/resources/icons/gender/woman.ico</file>
+        <file>/resources/icons/camera/camera.ico</file>
+        <file>/resources/icons/camera/capture.ico</file>
+        <file>/resources/icons/camera/settings.ico</file>
+        <file>/resources/icons/dialogs/accept.ico</file>
+        <file>/resources/icons/dialogs/folder.ico</file>
+        <file>/resources/icons/dialogs/reject.ico</file>
+        <file>/resources/icons/dialogs/reset.ico</file>
+        <file>/resources/icons/edit/add.ico</file>
+        <file>/resources/icons/edit/clear.ico</file>
+        <file>/resources/icons/edit/delete.ico</file>
+        <file>/resources/icons/edit/edit.ico</file>
+        <file>/resources/icons/file/new.ico</file>
+        <file>/resources/icons/file/open.ico</file>
+        <file>/resources/icons/file/save.ico</file>
+        <file>/resources/icons/file/save as.ico</file>
+        <file>/resources/icons/help/about.ico</file>
+        <file>/resources/icons/help/qt.ico</file>
+        <file>/resources/icons/file/close.ico</file>
+        <file>/resources/icons/edit/view.ico</file>
+    </qresource>
+</RCC>

@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <QCameraDevice>
 #include <QMediaDevices>
-#include "include/data/person.h"
+#include "data/person.h"
 
 namespace Ui { class PersonEdit; }
 

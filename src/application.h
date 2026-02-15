@@ -2,8 +2,8 @@
 #define APPLICATION_H
 
 #include <QMainWindow>
-#include "include/saverequest.h"
-#include "include/model/peoplemodel.h"
+#include "saverequest.h"
+#include "model/peoplemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
